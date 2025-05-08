@@ -1,0 +1,19 @@
+/*
+ * TsnController.cc
+ *
+ *  Created on: May 5, 2025
+ *      Author: root
+ */
+
+#include "TsnController.h"
+
+
+namespace inet {
+
+Define_Module(TsnController);
+
+void TsnController::initialize()
+{}
+
+
+}

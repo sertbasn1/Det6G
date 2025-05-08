@@ -1,0 +1,29 @@
+/*
+ * CentralNetworkConfig.h
+ *
+ *  Created on: May 7, 2025
+ *      Author: root
+ */
+
+#ifndef INET_CONFIGURATOR_CENTRALNETWORKCONFIG_H_
+#define INET_CONFIGURATOR_CENTRALNETWORKCONFIG_H_
+#include <omnetpp.h>
+#include "inet/queueing/source/ActivePacketSource.h"
+#include "Demand.h"
+using namespace omnetpp;
+using namespace std;
+
+namespace inet{
+
+class CentralNetworkConfig : public cSimpleModule
+{
+    public:
+        int registerStream(Demand d);
+
+    protected:
+        virtual void initialize() override;
+};
+}
+
+
+#endif /* INET_CONFIGURATOR_CENTRALNETWORKCONFIG_H_ */

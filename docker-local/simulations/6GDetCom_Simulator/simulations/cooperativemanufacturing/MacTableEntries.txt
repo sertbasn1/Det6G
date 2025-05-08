@@ -1,0 +1,21 @@
+VLAN ID    MAC    IfId    Inserted
+>>CooperativeManufacturing.detCom.nwtt.macTable
+0 0A-AA-00-00-00-02 102 -1
+0 0A-AA-00-00-00-11 100 -1
+0 0A-AA-00-00-00-12 100 -1
+>>CooperativeManufacturing.detCom.dstt[0].macTable
+0 0A-AA-00-00-00-02 102 -1
+0 0A-AA-00-00-00-11 101 -1
+0 0A-AA-00-00-00-12 101 -1
+>>CooperativeManufacturing.detCom.dstt[1].macTable
+0 0A-AA-00-00-00-02 100 -1
+0 0A-AA-00-00-00-11 101 -1
+0 0A-AA-00-00-00-12 101 -1
+>>CooperativeManufacturing.processingCell.bridge1.macTable
+0 0A-AA-00-00-00-02 102 -1
+0 0A-AA-00-00-00-11 101 -1
+0 0A-AA-00-00-00-12 100 -1
+>>CooperativeManufacturing.processingCell.bridge2.macTable
+0 0A-AA-00-00-00-02 101 -1
+0 0A-AA-00-00-00-11 100 -1
+0 0A-AA-00-00-00-12 101 -1

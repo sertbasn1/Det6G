@@ -1,0 +1,4959 @@
+file 364109 1746711502                                          
+version 3
+run General-0-20250508-13:38:10-307
+attr configname General
+attr datetime 20250508-13:38:10
+attr datetimef 20250508-133810
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network simpleTsn
+attr processid 307
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config image-path ../../../inet/images
+config sim-time-limit 4s
+config description "General configuration"
+config network simpleTsn
+config **.displayGateSchedules false
+config **.gateScheduleVisualizer.height 14
+config **.gateScheduleVisualizer.placementHint "\"bottom\""
+config *.scenarioManager.script "xmldoc(\"scenario.xml\")"
+config *.histogramContainer.histograms "{Uplink: \"../../../deterministic6g_data/PD-Wireless-5G-1/s1-UL_wall.xml\", Downlink: \"../../../deterministic6g_data/PD-Wireless-5G-1/s10-DL_wall.xml\"}"
+config *.detCom.delayConfig "xmldoc(\"delays_example.xml\")"
+config *.device1.numApps 3
+config *.device1.app[0].typename SimpleUdpSourceApp
+config *.device1.app[0].display-name stream1
+config *.device1.app[0].io.destAddress "\"device2\""
+config *.device1.app[0].io.destPort 1001
+config *.device1.app[0].source.packetLength "1000B - 54B"
+config *.device1.app[0].source.productionInterval 200ms
+config *.device1.app[0].source.initialProductionOffset 1s
+config *.device1.app[1].typename SimpleUdpSinkApp
+config *.device1.app[1].io.localPort 1002
+config *.device1.app[2].typename SimpleUdpSourceApp
+config *.device1.app[2].display-name stream3
+config *.device1.app[2].io.destAddress "\"device2\""
+config *.device1.app[2].io.destPort 1003
+config *.device1.app[2].source.packetLength "1000B - 54B"
+config *.device1.app[2].source.productionInterval 50ms
+config *.device1.app[2].source.initialProductionOffset 2s
+config *.device2.numApps 3
+config *.device2.app[0].typename SimpleUdpSinkApp
+config *.device2.app[0].io.localPort 1001
+config *.device2.app[1].typename SimpleUdpSourceApp
+config *.device2.app[1].display-name stream2
+config *.device2.app[1].io.destAddress "\"device1\""
+config *.device2.app[1].io.destPort 1002
+config *.device2.app[1].source.packetLength "1000B - 54B"
+config *.device2.app[1].source.productionInterval 100ms
+config *.device2.app[1].source.initialProductionOffset 3s
+config *.device2.app[2].typename SimpleUdpSinkApp
+config *.device2.app[2].io.localPort 1003
+config *.device1.app[0].source.streamingEnabled false
+config *.device1.app[2].source.streamingEnabled false
+config *.device2.app[1].source.streamingEnabled false
+config **.streamIdentifier.identifier.mapping "[{stream: \"stream1\", packetFilter: expr(udp.destPort == 1001)}, \n\t\t\t\t\t\t\t\t\t\t  {stream: \"stream2\", packetFilter: expr(udp.destPort == 1002)},\n\t\t\t\t\t\t\t\t\t\t  {stream: \"stream3\", packetFilter: expr(udp.destPort == 1003)}]"
+config **.streamCoder.*.mapping "[{stream: \"stream1\", pcp: 4, vlan: 1},\n\t\t\t\t\t\t\t{stream: \"stream2\", pcp: 4, vlan: 5},\n\t\t\t\t\t\t\t{stream: \"stream3\", pcp: 4, vlan: 5}]"
+config *.bridge*.bridging.directionReverser.reverser.excludeEncapsulationProtocols "[\"ieee8021qctag\"]"
+config *.bridge*.ieee8021q.qTagHeaderChecker.vlanIdFilter [1,5]
+config *.bridge*.eth[*].macLayer.queue.*[0].display-name "best effort"
+config *.bridge*.eth[*].macLayer.queue.*[1].display-name video
+config *.bridge*.eth[*].macLayer.queue.*[2].display-name control
+config *.bridge*.eth[*].macLayer.queue.*[3].display-name p3
+config *.bridge*.eth[*].macLayer.queue.*[4].display-name p4
+config *.bridge*.eth[*].macLayer.queue.*[5].display-name p5
+config *.bridge*.eth[*].macLayer.queue.*[6].display-name p6
+config *.bridge*.eth[*].macLayer.queue.*[7].display-name p7
+config *.macForwardingTableConfigurator.typename ""
+config **.bridge1.macTable.forwardingTable "[{address: \"device2\", vlan: 1, interface: \"eth2\"},{address: \"device1\", vlan: 5, interface: \"eth0\"},{address: \"device2\", vlan: 5, interface: \"eth1\"}]"
+config **.bridge2.macTable.forwardingTable "[{address: \"device2\", vlan: 1, interface: \"eth1\"},{address: \"device1\", vlan: 5, interface: \"eth0\"},{address: \"device2\", vlan: 5, interface: \"eth1\"}]"
+config **.bridge3.macTable.forwardingTable "[{address: \"device2\", vlan: 1, interface: \"eth1\"}]"
+
+vector 0 simpleTsn.device1.eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 1 simpleTsn.device1.eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 2 simpleTsn.device1.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 3 simpleTsn.device1.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 4 simpleTsn.device1.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 5 simpleTsn.detCom.dstt[0].eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 6 simpleTsn.detCom.dstt[0].eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 7 simpleTsn.detCom.dstt[0].tt[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 8 simpleTsn.detCom.dstt[0].tt[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 9 simpleTsn.detCom.nwtt.eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 10 simpleTsn.detCom.nwtt.eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 11 simpleTsn.detCom.nwtt.tt[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 12 simpleTsn.detCom.nwtt.tt[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 13 simpleTsn.bridge1.eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 14 simpleTsn.bridge1.eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 15 simpleTsn.bridge1.eth[1].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 16 simpleTsn.bridge1.eth[1].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 17 simpleTsn.bridge1.eth[2].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 18 simpleTsn.bridge1.eth[2].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 19 simpleTsn.bridge2.eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 20 simpleTsn.bridge2.eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 21 simpleTsn.bridge2.eth[1].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 22 simpleTsn.bridge2.eth[1].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 23 simpleTsn.bridge2.eth[2].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 24 simpleTsn.bridge2.eth[2].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 25 simpleTsn.bridge3.eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 26 simpleTsn.bridge3.eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 27 simpleTsn.bridge3.eth[1].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 28 simpleTsn.bridge3.eth[1].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 29 simpleTsn.device2.eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 30 simpleTsn.device2.eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 31 simpleTsn.device2.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 32 simpleTsn.device2.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 33 simpleTsn.device2.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 34 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 35 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 36 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 37 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 38 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 39 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 40 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 41 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 42 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 43 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 44 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 45 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 46 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 47 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 48 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 49 simpleTsn.device1.eth[0].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 50 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 51 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 52 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 53 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 54 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 55 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 56 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 57 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 58 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 59 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 60 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 61 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 62 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 63 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 64 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 65 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 66 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 67 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 68 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 69 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 70 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 71 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 72 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 73 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 74 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 75 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 76 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 77 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 78 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 79 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 80 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 81 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 82 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 83 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 84 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 85 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 86 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 87 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 88 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 89 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 90 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 91 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 92 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 93 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 94 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 95 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 96 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 97 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 98 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 99 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 100 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 101 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 102 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 103 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 104 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 105 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 106 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 107 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 108 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 109 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 110 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 111 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 112 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 113 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 114 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge1.eth[0].macLayer.queue.best effort"
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 115 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge1.eth[0].macLayer.queue.best effort"
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 116 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.video
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 117 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.video
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 118 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.control
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 119 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.control
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 120 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p3
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 121 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p3
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 122 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p4
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 123 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p4
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 124 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p5
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 125 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p5
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 126 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p6
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 127 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p6
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 128 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p7
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 129 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p7
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 130 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge1.eth[1].macLayer.queue.best effort"
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 131 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge1.eth[1].macLayer.queue.best effort"
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 132 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.video
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 133 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.video
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 134 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.control
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 135 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.control
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 136 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p3
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 137 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p3
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 138 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p4
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 139 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p4
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 140 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p5
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 141 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p5
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 142 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p6
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 143 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p6
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 144 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p7
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 145 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p7
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 146 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge1.eth[2].macLayer.queue.best effort"
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 147 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge1.eth[2].macLayer.queue.best effort"
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 148 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.video
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 149 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.video
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 150 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.control
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 151 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.control
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 152 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p3
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 153 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p3
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 154 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p4
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 155 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p4
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 156 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p5
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 157 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p5
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 158 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p6
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 159 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p6
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 160 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p7
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 161 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p7
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 162 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge2.eth[0].macLayer.queue.best effort"
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 163 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge2.eth[0].macLayer.queue.best effort"
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 164 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.video
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 165 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.video
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 166 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.control
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 167 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.control
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 168 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p3
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 169 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p3
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 170 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p4
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 171 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p4
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 172 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p5
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 173 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p5
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 174 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p6
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 175 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p6
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 176 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p7
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 177 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p7
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 178 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge2.eth[1].macLayer.queue.best effort"
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 179 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge2.eth[1].macLayer.queue.best effort"
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 180 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.video
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 181 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.video
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 182 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.control
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 183 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.control
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 184 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p3
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 185 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p3
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 186 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p4
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 187 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p4
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 188 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p5
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 189 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p5
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 190 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p6
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 191 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p6
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 192 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p7
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 193 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p7
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 194 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge2.eth[2].macLayer.queue.best effort"
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 195 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge2.eth[2].macLayer.queue.best effort"
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 196 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.video
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 197 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.video
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 198 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.control
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 199 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.control
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 200 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p3
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 201 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p3
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 202 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p4
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 203 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p4
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 204 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p5
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 205 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p5
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 206 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p6
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 207 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p6
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 208 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p7
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 209 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p7
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 210 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge3.eth[0].macLayer.queue.best effort"
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 211 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge3.eth[0].macLayer.queue.best effort"
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 212 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.video
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 213 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.video
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 214 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.control
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 215 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.control
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 216 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p3
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 217 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p3
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 218 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p4
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 219 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p4
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 220 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p5
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 221 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p5
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 222 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p6
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 223 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p6
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 224 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p7
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 225 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p7
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 226 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge3.eth[1].macLayer.queue.best effort"
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 227 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath "simpleTsn.bridge3.eth[1].macLayer.queue.best effort"
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 228 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.video
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 229 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.video
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 230 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.control
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 231 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.control
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 232 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p3
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 233 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p3
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 234 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p4
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 235 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p4
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 236 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p5
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 237 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p5
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 238 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p6
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 239 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p6
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 240 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p7
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 241 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p7
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 242 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 243 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 244 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 245 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 246 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 247 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 248 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 249 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 250 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 251 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 252 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 253 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 254 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 255 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 256 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 257 simpleTsn.device2.eth[0].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 258 simpleTsn.device1.ethernet.macHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 259 simpleTsn.device1.ethernet.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 260 simpleTsn.device1.ieee8021q.qTagHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 261 simpleTsn.device1.eth[0].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 262 simpleTsn.device1.eth[0].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 263 simpleTsn.device1.eth[0].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 264 simpleTsn.device1.eth[0].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 265 simpleTsn.device1.eth[0].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 266 simpleTsn.device1.eth[0].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 267 simpleTsn.device1.eth[0].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 268 simpleTsn.device1.eth[0].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 269 simpleTsn.device1.eth[0].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 270 simpleTsn.device1.eth[0].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 271 simpleTsn.device1.eth[0].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 272 simpleTsn.device1.eth[0].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 273 simpleTsn.device1.eth[0].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 274 simpleTsn.device1.eth[0].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 275 simpleTsn.device1.eth[0].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 276 simpleTsn.device1.eth[0].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 277 simpleTsn.device1.eth[0].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 278 simpleTsn.device1.eth[0].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 279 simpleTsn.device1.eth[0].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 280 simpleTsn.device1.eth[0].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 281 simpleTsn.device1.eth[0].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 282 simpleTsn.device1.eth[0].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 283 simpleTsn.device1.eth[0].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 284 simpleTsn.device1.eth[0].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 285 simpleTsn.device1.app[0].source dataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.device1.stream1.source
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 286 simpleTsn.device1.app[1].sink dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 287 simpleTsn.device1.app[1].sink droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 288 simpleTsn.device1.app[2].source dataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.device1.stream3.source
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 289 simpleTsn.detCom.dstt[0].ethernet.macHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 290 simpleTsn.detCom.dstt[0].ethernet.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 291 simpleTsn.detCom.dstt[0].ieee8021q.qTagHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 292 simpleTsn.detCom.dstt[0].ieee8021r.rTagHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 293 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 294 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 295 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 296 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 297 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 298 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 299 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 300 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 301 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 302 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 303 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 304 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 305 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 306 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 307 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 308 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 309 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 310 simpleTsn.detCom.dstt[0].eth[0].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 311 simpleTsn.detCom.dstt[0].eth[0].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 312 simpleTsn.detCom.dstt[0].eth[0].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 313 simpleTsn.detCom.dstt[0].eth[0].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 314 simpleTsn.detCom.dstt[0].eth[0].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 315 simpleTsn.detCom.dstt[0].eth[0].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 316 simpleTsn.detCom.dstt[0].eth[0].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 317 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 318 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 319 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 320 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 321 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 322 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 323 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 324 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 325 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 326 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 327 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 328 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 329 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 330 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 331 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 332 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 333 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 334 simpleTsn.detCom.dstt[0].tt[0].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 335 simpleTsn.detCom.dstt[0].tt[0].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 336 simpleTsn.detCom.dstt[0].tt[0].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 337 simpleTsn.detCom.dstt[0].tt[0].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 338 simpleTsn.detCom.dstt[0].tt[0].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 339 simpleTsn.detCom.dstt[0].tt[0].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 340 simpleTsn.detCom.dstt[0].tt[0].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 341 simpleTsn.detCom.nwtt.ethernet.macHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 342 simpleTsn.detCom.nwtt.ethernet.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 343 simpleTsn.detCom.nwtt.ieee8021q.qTagHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 344 simpleTsn.detCom.nwtt.ieee8021r.rTagHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 345 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 346 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 347 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 348 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 349 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 350 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 351 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 352 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 353 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 354 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 355 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 356 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 357 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 358 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 359 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 360 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 361 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 362 simpleTsn.detCom.nwtt.eth[0].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 363 simpleTsn.detCom.nwtt.eth[0].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 364 simpleTsn.detCom.nwtt.eth[0].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 365 simpleTsn.detCom.nwtt.eth[0].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 366 simpleTsn.detCom.nwtt.eth[0].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 367 simpleTsn.detCom.nwtt.eth[0].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 368 simpleTsn.detCom.nwtt.eth[0].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 369 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 370 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 371 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 372 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 373 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 374 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 375 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 376 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 377 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 378 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 379 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 380 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 381 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 382 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 383 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 384 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 385 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 386 simpleTsn.detCom.nwtt.tt[0].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 387 simpleTsn.detCom.nwtt.tt[0].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 388 simpleTsn.detCom.nwtt.tt[0].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 389 simpleTsn.detCom.nwtt.tt[0].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 390 simpleTsn.detCom.nwtt.tt[0].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 391 simpleTsn.detCom.nwtt.tt[0].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 392 simpleTsn.detCom.nwtt.tt[0].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 393 simpleTsn.bridge1.ethernet.macHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 394 simpleTsn.bridge1.ethernet.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 395 simpleTsn.bridge1.ieee8021q.qTagHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 396 simpleTsn.bridge1.ieee8021r.rTagHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 397 simpleTsn.bridge1.eth[0].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 398 simpleTsn.bridge1.eth[0].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge1.eth[0].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 399 simpleTsn.bridge1.eth[0].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge1.eth[0].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 400 simpleTsn.bridge1.eth[0].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 401 simpleTsn.bridge1.eth[0].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 402 simpleTsn.bridge1.eth[0].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 403 simpleTsn.bridge1.eth[0].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 404 simpleTsn.bridge1.eth[0].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 405 simpleTsn.bridge1.eth[0].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 406 simpleTsn.bridge1.eth[0].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 407 simpleTsn.bridge1.eth[0].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 408 simpleTsn.bridge1.eth[0].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 409 simpleTsn.bridge1.eth[0].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 410 simpleTsn.bridge1.eth[0].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 411 simpleTsn.bridge1.eth[0].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 412 simpleTsn.bridge1.eth[0].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 413 simpleTsn.bridge1.eth[0].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[0].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 414 simpleTsn.bridge1.eth[0].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 415 simpleTsn.bridge1.eth[0].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 416 simpleTsn.bridge1.eth[0].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 417 simpleTsn.bridge1.eth[0].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 418 simpleTsn.bridge1.eth[0].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 419 simpleTsn.bridge1.eth[0].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 420 simpleTsn.bridge1.eth[0].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 421 simpleTsn.bridge1.eth[1].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 422 simpleTsn.bridge1.eth[1].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge1.eth[1].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 423 simpleTsn.bridge1.eth[1].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge1.eth[1].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 424 simpleTsn.bridge1.eth[1].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 425 simpleTsn.bridge1.eth[1].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 426 simpleTsn.bridge1.eth[1].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 427 simpleTsn.bridge1.eth[1].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 428 simpleTsn.bridge1.eth[1].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 429 simpleTsn.bridge1.eth[1].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 430 simpleTsn.bridge1.eth[1].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 431 simpleTsn.bridge1.eth[1].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 432 simpleTsn.bridge1.eth[1].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 433 simpleTsn.bridge1.eth[1].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 434 simpleTsn.bridge1.eth[1].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 435 simpleTsn.bridge1.eth[1].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 436 simpleTsn.bridge1.eth[1].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 437 simpleTsn.bridge1.eth[1].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[1].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 438 simpleTsn.bridge1.eth[1].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 439 simpleTsn.bridge1.eth[1].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 440 simpleTsn.bridge1.eth[1].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 441 simpleTsn.bridge1.eth[1].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 442 simpleTsn.bridge1.eth[1].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 443 simpleTsn.bridge1.eth[1].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 444 simpleTsn.bridge1.eth[1].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 445 simpleTsn.bridge1.eth[2].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 446 simpleTsn.bridge1.eth[2].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge1.eth[2].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 447 simpleTsn.bridge1.eth[2].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge1.eth[2].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 448 simpleTsn.bridge1.eth[2].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 449 simpleTsn.bridge1.eth[2].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 450 simpleTsn.bridge1.eth[2].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 451 simpleTsn.bridge1.eth[2].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 452 simpleTsn.bridge1.eth[2].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 453 simpleTsn.bridge1.eth[2].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 454 simpleTsn.bridge1.eth[2].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 455 simpleTsn.bridge1.eth[2].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 456 simpleTsn.bridge1.eth[2].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 457 simpleTsn.bridge1.eth[2].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 458 simpleTsn.bridge1.eth[2].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 459 simpleTsn.bridge1.eth[2].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 460 simpleTsn.bridge1.eth[2].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 461 simpleTsn.bridge1.eth[2].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge1.eth[2].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 462 simpleTsn.bridge1.eth[2].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 463 simpleTsn.bridge1.eth[2].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 464 simpleTsn.bridge1.eth[2].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 465 simpleTsn.bridge1.eth[2].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 466 simpleTsn.bridge1.eth[2].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 467 simpleTsn.bridge1.eth[2].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 468 simpleTsn.bridge1.eth[2].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 469 simpleTsn.bridge2.ethernet.macHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 470 simpleTsn.bridge2.ethernet.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 471 simpleTsn.bridge2.ieee8021q.qTagHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 472 simpleTsn.bridge2.ieee8021r.rTagHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 473 simpleTsn.bridge2.eth[0].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 474 simpleTsn.bridge2.eth[0].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge2.eth[0].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 475 simpleTsn.bridge2.eth[0].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge2.eth[0].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 476 simpleTsn.bridge2.eth[0].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 477 simpleTsn.bridge2.eth[0].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 478 simpleTsn.bridge2.eth[0].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 479 simpleTsn.bridge2.eth[0].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 480 simpleTsn.bridge2.eth[0].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 481 simpleTsn.bridge2.eth[0].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 482 simpleTsn.bridge2.eth[0].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 483 simpleTsn.bridge2.eth[0].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 484 simpleTsn.bridge2.eth[0].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 485 simpleTsn.bridge2.eth[0].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 486 simpleTsn.bridge2.eth[0].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 487 simpleTsn.bridge2.eth[0].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 488 simpleTsn.bridge2.eth[0].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 489 simpleTsn.bridge2.eth[0].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[0].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 490 simpleTsn.bridge2.eth[0].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 491 simpleTsn.bridge2.eth[0].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 492 simpleTsn.bridge2.eth[0].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 493 simpleTsn.bridge2.eth[0].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 494 simpleTsn.bridge2.eth[0].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 495 simpleTsn.bridge2.eth[0].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 496 simpleTsn.bridge2.eth[0].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 497 simpleTsn.bridge2.eth[1].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 498 simpleTsn.bridge2.eth[1].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge2.eth[1].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 499 simpleTsn.bridge2.eth[1].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge2.eth[1].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 500 simpleTsn.bridge2.eth[1].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 501 simpleTsn.bridge2.eth[1].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 502 simpleTsn.bridge2.eth[1].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 503 simpleTsn.bridge2.eth[1].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 504 simpleTsn.bridge2.eth[1].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 505 simpleTsn.bridge2.eth[1].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 506 simpleTsn.bridge2.eth[1].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 507 simpleTsn.bridge2.eth[1].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 508 simpleTsn.bridge2.eth[1].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 509 simpleTsn.bridge2.eth[1].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 510 simpleTsn.bridge2.eth[1].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 511 simpleTsn.bridge2.eth[1].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 512 simpleTsn.bridge2.eth[1].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 513 simpleTsn.bridge2.eth[1].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[1].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 514 simpleTsn.bridge2.eth[1].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 515 simpleTsn.bridge2.eth[1].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 516 simpleTsn.bridge2.eth[1].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 517 simpleTsn.bridge2.eth[1].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 518 simpleTsn.bridge2.eth[1].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 519 simpleTsn.bridge2.eth[1].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 520 simpleTsn.bridge2.eth[1].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 521 simpleTsn.bridge2.eth[2].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 522 simpleTsn.bridge2.eth[2].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge2.eth[2].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 523 simpleTsn.bridge2.eth[2].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge2.eth[2].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 524 simpleTsn.bridge2.eth[2].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 525 simpleTsn.bridge2.eth[2].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 526 simpleTsn.bridge2.eth[2].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 527 simpleTsn.bridge2.eth[2].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 528 simpleTsn.bridge2.eth[2].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 529 simpleTsn.bridge2.eth[2].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 530 simpleTsn.bridge2.eth[2].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 531 simpleTsn.bridge2.eth[2].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 532 simpleTsn.bridge2.eth[2].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 533 simpleTsn.bridge2.eth[2].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 534 simpleTsn.bridge2.eth[2].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 535 simpleTsn.bridge2.eth[2].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 536 simpleTsn.bridge2.eth[2].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 537 simpleTsn.bridge2.eth[2].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge2.eth[2].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 538 simpleTsn.bridge2.eth[2].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 539 simpleTsn.bridge2.eth[2].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 540 simpleTsn.bridge2.eth[2].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 541 simpleTsn.bridge2.eth[2].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 542 simpleTsn.bridge2.eth[2].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 543 simpleTsn.bridge2.eth[2].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 544 simpleTsn.bridge2.eth[2].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 545 simpleTsn.bridge3.ethernet.macHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 546 simpleTsn.bridge3.ethernet.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 547 simpleTsn.bridge3.ieee8021q.qTagHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 548 simpleTsn.bridge3.ieee8021r.rTagHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 549 simpleTsn.bridge3.eth[0].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 550 simpleTsn.bridge3.eth[0].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge3.eth[0].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 551 simpleTsn.bridge3.eth[0].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge3.eth[0].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 552 simpleTsn.bridge3.eth[0].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 553 simpleTsn.bridge3.eth[0].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 554 simpleTsn.bridge3.eth[0].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 555 simpleTsn.bridge3.eth[0].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 556 simpleTsn.bridge3.eth[0].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 557 simpleTsn.bridge3.eth[0].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 558 simpleTsn.bridge3.eth[0].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 559 simpleTsn.bridge3.eth[0].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 560 simpleTsn.bridge3.eth[0].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 561 simpleTsn.bridge3.eth[0].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 562 simpleTsn.bridge3.eth[0].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 563 simpleTsn.bridge3.eth[0].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 564 simpleTsn.bridge3.eth[0].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 565 simpleTsn.bridge3.eth[0].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[0].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 566 simpleTsn.bridge3.eth[0].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 567 simpleTsn.bridge3.eth[0].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 568 simpleTsn.bridge3.eth[0].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 569 simpleTsn.bridge3.eth[0].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 570 simpleTsn.bridge3.eth[0].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 571 simpleTsn.bridge3.eth[0].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 572 simpleTsn.bridge3.eth[0].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 573 simpleTsn.bridge3.eth[1].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 574 simpleTsn.bridge3.eth[1].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge3.eth[1].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 575 simpleTsn.bridge3.eth[1].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath "simpleTsn.bridge3.eth[1].macLayer.queue.best effort"
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 576 simpleTsn.bridge3.eth[1].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 577 simpleTsn.bridge3.eth[1].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.video
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 578 simpleTsn.bridge3.eth[1].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 579 simpleTsn.bridge3.eth[1].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.control
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 580 simpleTsn.bridge3.eth[1].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 581 simpleTsn.bridge3.eth[1].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p3
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 582 simpleTsn.bridge3.eth[1].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 583 simpleTsn.bridge3.eth[1].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p4
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 584 simpleTsn.bridge3.eth[1].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 585 simpleTsn.bridge3.eth[1].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p5
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 586 simpleTsn.bridge3.eth[1].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 587 simpleTsn.bridge3.eth[1].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p6
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 588 simpleTsn.bridge3.eth[1].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 589 simpleTsn.bridge3.eth[1].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.bridge3.eth[1].macLayer.queue.p7
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 590 simpleTsn.bridge3.eth[1].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 591 simpleTsn.bridge3.eth[1].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 592 simpleTsn.bridge3.eth[1].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 593 simpleTsn.bridge3.eth[1].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 594 simpleTsn.bridge3.eth[1].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 595 simpleTsn.bridge3.eth[1].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 596 simpleTsn.bridge3.eth[1].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 597 simpleTsn.device2.ethernet.macHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 598 simpleTsn.device2.ethernet.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 599 simpleTsn.device2.ieee8021q.qTagHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 600 simpleTsn.device2.eth[0].macLayer.queue.classifier dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 601 simpleTsn.device2.eth[0].macLayer.queue.queue[0] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 602 simpleTsn.device2.eth[0].macLayer.queue.queue[0] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 603 simpleTsn.device2.eth[0].macLayer.queue.queue[1] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 604 simpleTsn.device2.eth[0].macLayer.queue.queue[1] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 605 simpleTsn.device2.eth[0].macLayer.queue.queue[2] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 606 simpleTsn.device2.eth[0].macLayer.queue.queue[2] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 607 simpleTsn.device2.eth[0].macLayer.queue.queue[3] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 608 simpleTsn.device2.eth[0].macLayer.queue.queue[3] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 609 simpleTsn.device2.eth[0].macLayer.queue.queue[4] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 610 simpleTsn.device2.eth[0].macLayer.queue.queue[4] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 611 simpleTsn.device2.eth[0].macLayer.queue.queue[5] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 612 simpleTsn.device2.eth[0].macLayer.queue.queue[5] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 613 simpleTsn.device2.eth[0].macLayer.queue.queue[6] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 614 simpleTsn.device2.eth[0].macLayer.queue.queue[6] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 615 simpleTsn.device2.eth[0].macLayer.queue.queue[7] outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 616 simpleTsn.device2.eth[0].macLayer.queue.queue[7] incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 617 simpleTsn.device2.eth[0].macLayer.queue.transmissionSelection dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "data rate"
+attr unit bps
+vector 618 simpleTsn.device2.eth[0].macLayer.server incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "incoming datarate"
+attr unit bps
+vector 619 simpleTsn.device2.eth[0].macLayer.server outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "outgoing datarate"
+attr unit bps
+vector 620 simpleTsn.device2.eth[0].macLayer.fcsChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 621 simpleTsn.device2.eth[0].phyLayer.transmitter throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(transmissionEnded)
+attr title throughput
+attr unit bps
+vector 622 simpleTsn.device2.eth[0].phyLayer.phyHeaderChecker droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 623 simpleTsn.device2.eth[0].phyLayer.receiver throughput:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(receptionEnded)
+attr title throughput
+attr unit bps
+vector 624 simpleTsn.device2.app[0].sink dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 625 simpleTsn.device2.app[0].sink droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+vector 626 simpleTsn.device2.app[1].source dataRate:vector ETV
+attr interpolationmode linear
+attr moduledisplaypath simpleTsn.device2.stream2.source
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 627 simpleTsn.device2.app[2].sink dataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushed)
+attr title "data rate"
+attr unit bps
+vector 628 simpleTsn.device2.app[2].sink droppedDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetDropped)
+attr title "dropped data rate"
+attr unit bps
+0	170242 16 0 0 0 0 2 0 0 0 0
+1	170258 16 0 0 0 0 2 0 0 0 0
+2	170274 8 0 0 0 0 1 0 0 0 0
+3	170282 8 0 0 0 0 1 0 0 0 0
+4	170290 8 0 0 0 0 1 0 0 0 0
+5	170298 16 0 0 0 0 2 0 0 0 0
+6	170314 16 0 0 0 0 2 0 0 0 0
+7	170330 16 0 0 0 0 2 0 0 0 0
+8	170346 16 0 0 0 0 2 0 0 0 0
+9	170362 16 0 0 0 0 2 0 0 0 0
+10	170378 18 0 0 0 0 2 0 0 0 0
+11	170396 18 0 0 0 0 2 0 0 0 0
+12	170414 18 0 0 0 0 2 0 0 0 0
+13	170432 18 0 0 0 0 2 0 0 0 0
+14	170450 18 0 0 0 0 2 0 0 0 0
+15	170468 18 0 0 0 0 2 0 0 0 0
+16	170486 18 0 0 0 0 2 0 0 0 0
+17	170504 18 0 0 0 0 2 0 0 0 0
+18	170522 18 0 0 0 0 2 0 0 0 0
+19	170540 18 0 0 0 0 2 0 0 0 0
+20	170558 18 0 0 0 0 2 0 0 0 0
+21	170576 18 0 0 0 0 2 0 0 0 0
+22	170594 18 0 0 0 0 2 0 0 0 0
+23	170612 18 0 0 0 0 2 0 0 0 0
+24	170630 18 0 0 0 0 2 0 0 0 0
+25	170648 18 0 0 0 0 2 0 0 0 0
+26	170666 18 0 0 0 0 2 0 0 0 0
+27	170684 18 0 0 0 0 2 0 0 0 0
+28	170702 18 0 0 0 0 2 0 0 0 0
+29	170720 18 0 0 0 0 2 0 0 0 0
+30	170738 18 0 0 0 0 2 0 0 0 0
+31	170756 9 0 0 0 0 1 0 0 0 0
+32	170765 9 0 0 0 0 1 0 0 0 0
+33	170774 9 0 0 0 0 1 0 0 0 0
+34	170783 9 0 0 0 0 1 1 1 1 1
+35	170792 19 0 31 0 4 2 0 0 0 0
+36	170811 9 0 0 0 0 1 1 1 1 1
+37	170820 19 0 31 0 4 2 0 0 0 0
+38	170839 9 0 0 0 0 1 1 1 1 1
+39	170848 19 0 31 0 4 2 0 0 0 0
+40	170867 9 0 0 0 0 1 1 1 1 1
+41	170876 19 0 31 0 4 2 0 0 0 0
+42	170895 9 0 0 0 0 1 1 1 1 1
+43	170904 19 0 31 0 4 2 0 0 0 0
+44	170923 9 0 0 0 0 1 1 1 1 1
+45	170932 19 0 31 0 4 2 0 0 0 0
+46	170951 9 0 0 0 0 1 1 1 1 1
+47	170960 19 0 31 0 4 2 0 0 0 0
+48	170979 9 0 0 0 0 1 1 1 1 1
+49	170988 19 0 31 0 4 2 0 0 0 0
+50	171007 9 0 0 0 0 1 1 1 1 1
+51	171016 19 0 31 0 4 2 0 0 0 0
+52	171035 9 0 0 0 0 1 1 1 1 1
+53	171044 19 0 31 0 4 2 0 0 0 0
+54	171063 9 0 0 0 0 1 1 1 1 1
+55	171072 19 0 31 0 4 2 0 0 0 0
+56	171091 9 0 0 0 0 1 1 1 1 1
+57	171100 19 0 31 0 4 2 0 0 0 0
+58	171119 9 0 0 0 0 1 1 1 1 1
+59	171128 19 0 31 0 4 2 0 0 0 0
+60	171147 9 0 0 0 0 1 1 1 1 1
+61	171156 19 0 31 0 4 2 0 0 0 0
+62	171175 9 0 0 0 0 1 1 1 1 1
+63	171184 19 0 31 0 4 2 0 0 0 0
+64	171203 9 0 0 0 0 1 1 1 1 1
+65	171212 19 0 31 0 4 2 0 0 0 0
+66	171231 9 0 0 0 0 1 1 1 1 1
+67	171240 19 0 31 0 4 2 0 0 0 0
+68	171259 9 0 0 0 0 1 1 1 1 1
+69	171268 19 0 31 0 4 2 0 0 0 0
+70	171287 9 0 0 0 0 1 1 1 1 1
+71	171296 19 0 31 0 4 2 0 0 0 0
+72	171315 9 0 0 0 0 1 1 1 1 1
+73	171324 19 0 31 0 4 2 0 0 0 0
+74	171343 9 0 0 0 0 1 1 1 1 1
+75	171352 19 0 31 0 4 2 0 0 0 0
+76	171371 9 0 0 0 0 1 1 1 1 1
+77	171380 19 0 31 0 4 2 0 0 0 0
+78	171399 9 0 0 0 0 1 1 1 1 1
+79	171408 19 0 31 0 4 2 0 0 0 0
+80	171427 9 0 0 0 0 1 1 1 1 1
+81	171436 19 0 31 0 4 2 0 0 0 0
+82	171455 9 0 0 0 0 1 1 1 1 1
+83	171464 19 0 31 0 4 2 0 0 0 0
+84	171483 9 0 0 0 0 1 1 1 1 1
+85	171492 19 0 31 0 4 2 0 0 0 0
+86	171511 9 0 0 0 0 1 1 1 1 1
+87	171520 19 0 31 0 4 2 0 0 0 0
+88	171539 9 0 0 0 0 1 1 1 1 1
+89	171548 19 0 31 0 4 2 0 0 0 0
+90	171567 9 0 0 0 0 1 1 1 1 1
+91	171576 19 0 31 0 4 2 0 0 0 0
+92	171595 9 0 0 0 0 1 1 1 1 1
+93	171604 19 0 31 0 4 2 0 0 0 0
+94	171623 9 0 0 0 0 1 1 1 1 1
+95	171632 19 0 31 0 4 2 0 0 0 0
+96	171651 9 0 0 0 0 1 1 1 1 1
+97	171660 19 0 31 0 4 2 0 0 0 0
+98	171679 9 0 0 0 0 1 1 1 1 1
+99	171688 19 0 31 0 4 2 0 0 0 0
+100	171707 10 0 0 0 0 1 1 1 1 1
+101	171717 21 0 31 0 4 2 0 0 0 0
+102	171738 10 0 0 0 0 1 1 1 1 1
+103	171748 21 0 31 0 4 2 0 0 0 0
+104	171769 10 0 0 0 0 1 1 1 1 1
+105	171779 21 0 31 0 4 2 0 0 0 0
+106	171800 10 0 0 0 0 1 1 1 1 1
+107	171810 21 0 31 0 4 2 0 0 0 0
+108	171831 10 0 0 0 0 1 1 1 1 1
+109	171841 21 0 31 0 4 2 0 0 0 0
+110	171862 10 0 0 0 0 1 1 1 1 1
+111	171872 21 0 31 0 4 2 0 0 0 0
+112	171893 10 0 0 0 0 1 1 1 1 1
+113	171903 21 0 31 0 4 2 0 0 0 0
+114	171924 10 0 0 0 0 1 1 1 1 1
+115	171934 21 0 31 0 4 2 0 0 0 0
+116	171955 10 0 0 0 0 1 1 1 1 1
+117	171965 21 0 31 0 4 2 0 0 0 0
+118	171986 10 0 0 0 0 1 1 1 1 1
+119	171996 21 0 31 0 4 2 0 0 0 0
+120	172017 10 0 0 0 0 1 1 1 1 1
+121	172027 21 0 31 0 4 2 0 0 0 0
+122	172048 10 0 0 0 0 1 1 1 1 1
+123	172058 21 0 31 0 4 2 0 0 0 0
+124	172079 10 0 0 0 0 1 1 1 1 1
+125	172089 21 0 31 0 4 2 0 0 0 0
+126	172110 10 0 0 0 0 1 1 1 1 1
+127	172120 21 0 31 0 4 2 0 0 0 0
+128	172141 10 0 0 0 0 1 1 1 1 1
+129	172151 21 0 31 0 4 2 0 0 0 0
+130	172172 10 0 0 0 0 1 1 1 1 1
+131	172182 21 0 31 0 4 2 0 0 0 0
+132	172203 10 0 0 0 0 1 1 1 1 1
+133	172213 21 0 31 0 4 2 0 0 0 0
+134	172234 10 0 0 0 0 1 1 1 1 1
+135	172244 21 0 31 0 4 2 0 0 0 0
+136	172265 10 0 0 0 0 1 1 1 1 1
+137	172275 21 0 31 0 4 2 0 0 0 0
+138	172296 10 0 0 0 0 1 1 1 1 1
+139	172306 21 0 31 0 4 2 0 0 0 0
+140	172327 10 0 0 0 0 1 1 1 1 1
+141	172337 21 0 31 0 4 2 0 0 0 0
+142	172358 10 0 0 0 0 1 1 1 1 1
+143	172368 21 0 31 0 4 2 0 0 0 0
+144	172389 10 0 0 0 0 1 1 1 1 1
+145	172399 21 0 31 0 4 2 0 0 0 0
+146	172420 10 0 0 0 0 1 1 1 1 1
+147	172430 21 0 31 0 4 2 0 0 0 0
+148	172451 10 0 0 0 0 1 1 1 1 1
+149	172461 21 0 31 0 4 2 0 0 0 0
+150	172482 10 0 0 0 0 1 1 1 1 1
+151	172492 21 0 31 0 4 2 0 0 0 0
+152	172513 10 0 0 0 0 1 1 1 1 1
+153	172523 21 0 31 0 4 2 0 0 0 0
+154	172544 10 0 0 0 0 1 1 1 1 1
+155	172554 21 0 31 0 4 2 0 0 0 0
+156	172575 10 0 0 0 0 1 1 1 1 1
+157	172585 21 0 31 0 4 2 0 0 0 0
+158	172606 10 0 0 0 0 1 1 1 1 1
+159	172616 21 0 31 0 4 2 0 0 0 0
+160	172637 10 0 0 0 0 1 1 1 1 1
+161	172647 21 0 31 0 4 2 0 0 0 0
+162	172668 10 0 0 0 0 1 1 1 1 1
+163	172678 21 0 31 0 4 2 0 0 0 0
+164	172699 10 0 0 0 0 1 1 1 1 1
+165	172709 21 0 31 0 4 2 0 0 0 0
+166	172730 10 0 0 0 0 1 1 1 1 1
+167	172740 21 0 31 0 4 2 0 0 0 0
+168	172761 10 0 0 0 0 1 1 1 1 1
+169	172771 21 0 31 0 4 2 0 0 0 0
+170	172792 10 0 0 0 0 1 1 1 1 1
+171	172802 21 0 31 0 4 2 0 0 0 0
+172	172823 10 0 0 0 0 1 1 1 1 1
+173	172833 21 0 31 0 4 2 0 0 0 0
+174	172854 10 0 0 0 0 1 1 1 1 1
+175	172864 21 0 31 0 4 2 0 0 0 0
+176	172885 10 0 0 0 0 1 1 1 1 1
+177	172895 21 0 31 0 4 2 0 0 0 0
+178	172916 10 0 0 0 0 1 1 1 1 1
+179	172926 21 0 31 0 4 2 0 0 0 0
+180	172947 10 0 0 0 0 1 1 1 1 1
+181	172957 21 0 31 0 4 2 0 0 0 0
+182	172978 10 0 0 0 0 1 1 1 1 1
+183	172988 21 0 31 0 4 2 0 0 0 0
+184	173009 10 0 0 0 0 1 1 1 1 1
+185	173019 21 0 31 0 4 2 0 0 0 0
+186	173040 10 0 0 0 0 1 1 1 1 1
+187	173050 21 0 31 0 4 2 0 0 0 0
+188	173071 10 0 0 0 0 1 1 1 1 1
+189	173081 21 0 31 0 4 2 0 0 0 0
+190	173102 10 0 0 0 0 1 1 1 1 1
+191	173112 21 0 31 0 4 2 0 0 0 0
+192	173133 10 0 0 0 0 1 1 1 1 1
+193	173143 21 0 31 0 4 2 0 0 0 0
+194	173164 10 0 0 0 0 1 1 1 1 1
+195	173174 21 0 31 0 4 2 0 0 0 0
+196	173195 10 0 0 0 0 1 1 1 1 1
+197	173205 21 0 31 0 4 2 0 0 0 0
+198	173226 10 0 0 0 0 1 1 1 1 1
+199	173236 21 0 31 0 4 2 0 0 0 0
+200	173257 10 0 0 0 0 1 1 1 1 1
+201	173267 21 0 31 0 4 2 0 0 0 0
+202	173288 10 0 0 0 0 1 1 1 1 1
+203	173298 21 0 31 0 4 2 0 0 0 0
+204	173319 10 0 0 0 0 1 1 1 1 1
+205	173329 21 0 31 0 4 2 0 0 0 0
+206	173350 10 0 0 0 0 1 1 1 1 1
+207	173360 21 0 31 0 4 2 0 0 0 0
+208	173381 10 0 0 0 0 1 1 1 1 1
+209	173391 21 0 31 0 4 2 0 0 0 0
+210	173412 10 0 0 0 0 1 1 1 1 1
+211	173422 21 0 31 0 4 2 0 0 0 0
+212	173443 10 0 0 0 0 1 1 1 1 1
+213	173453 21 0 31 0 4 2 0 0 0 0
+214	173474 10 0 0 0 0 1 1 1 1 1
+215	173484 21 0 31 0 4 2 0 0 0 0
+216	173505 10 0 0 0 0 1 1 1 1 1
+217	173515 21 0 31 0 4 2 0 0 0 0
+218	173536 10 0 0 0 0 1 1 1 1 1
+219	173546 21 0 31 0 4 2 0 0 0 0
+220	173567 10 0 0 0 0 1 1 1 1 1
+221	173577 21 0 31 0 4 2 0 0 0 0
+222	173598 10 0 0 0 0 1 1 1 1 1
+223	173608 21 0 31 0 4 2 0 0 0 0
+224	173629 10 0 0 0 0 1 1 1 1 1
+225	173639 21 0 31 0 4 2 0 0 0 0
+226	173660 10 0 0 0 0 1 1 1 1 1
+227	173670 21 0 31 0 4 2 0 0 0 0
+228	173691 10 0 0 0 0 1 1 1 1 1
+229	173701 21 0 31 0 4 2 0 0 0 0
+230	173722 10 0 0 0 0 1 1 1 1 1
+231	173732 21 0 31 0 4 2 0 0 0 0
+232	173753 10 0 0 0 0 1 1 1 1 1
+233	173763 21 0 31 0 4 2 0 0 0 0
+234	173784 10 0 0 0 0 1 1 1 1 1
+235	173794 21 0 31 0 4 2 0 0 0 0
+236	173815 10 0 0 0 0 1 1 1 1 1
+237	173825 21 0 31 0 4 2 0 0 0 0
+238	173846 10 0 0 0 0 1 1 1 1 1
+239	173856 21 0 31 0 4 2 0 0 0 0
+240	173877 10 0 0 0 0 1 1 1 1 1
+241	173887 21 0 31 0 4 2 0 0 0 0
+242	173908 10 0 0 0 0 1 1 1 1 1
+243	173918 21 0 31 0 4 2 0 0 0 0
+244	173939 10 0 0 0 0 1 1 1 1 1
+245	173949 21 0 31 0 4 2 0 0 0 0
+246	173970 10 0 0 0 0 1 1 1 1 1
+247	173980 21 0 31 0 4 2 0 0 0 0
+248	174001 10 0 0 0 0 1 1 1 1 1
+249	174011 21 0 31 0 4 2 0 0 0 0
+250	174032 10 0 0 0 0 1 1 1 1 1
+251	174042 21 0 31 0 4 2 0 0 0 0
+252	174063 10 0 0 0 0 1 1 1 1 1
+253	174073 21 0 31 0 4 2 0 0 0 0
+254	174094 10 0 0 0 0 1 1 1 1 1
+255	174104 21 0 31 0 4 2 0 0 0 0
+256	174125 10 0 0 0 0 1 1 1 1 1
+257	174135 21 0 31 0 4 2 0 0 0 0
+258	174156 512 31 31 0.1 4 40 0 0 0 0
+259	174668 512 31 31 0.1 4 40 0 0 0 0
+260	175180 512 31 31 0.1 4 40 0 0 0 0
+261	175692 512 31 31 0.1 4 40 0 0 0 0
+262	176204 512 31 31 0.1 4 40 0 0 0 0
+263	176716 512 31 31 0.1 4 40 0 0 0 0
+264	177228 512 31 31 0.1 4 40 0 0 0 0
+265	177740 512 31 31 0.1 4 40 0 0 0 0
+266	178252 512 31 31 0.1 4 40 0 0 0 0
+267	178764 512 31 31 0.1 4 40 0 0 0 0
+268	179276 512 31 31 0.1 4 40 0 0 0 0
+269	179788 512 31 31 0.1 4 40 0 0 0 0
+270	180300 512 31 31 0.1 4 40 0 0 0 0
+271	180812 512 31 31 0.1 4 40 0 0 0 0
+272	181324 512 31 31 0.1 4 40 0 0 0 0
+273	181836 512 31 31 0.1 4 40 0 0 0 0
+274	182348 512 31 31 0.1 4 40 0 0 0 0
+275	182860 512 31 31 0.1 4 40 0 0 0 0
+276	183372 512 31 31 0.1 4 40 0 0 0 0
+277	183884 512 31 31 0.1 4 40 0 0 0 0
+278	184396 512 31 31 0.1 4 40 0 0 0 0
+279	184908 512 31 31 0.1 4 40 0 0 0 0
+280	185420 512 31 31 0.1 4 40 0 0 0 0
+281	185932 512 31 31 0.1 4 40 0 0 0 0
+282	186444 512 31 31 0.1 4 40 0 0 0 0
+283	186956 512 31 31 0.1 4 40 0 0 0 0
+284	187468 512 31 31 0.1 4 40 0 0 0 0
+285	187980 512 31 31 0.1 4 40 0 0 0 0
+286	188492 512 31 31 0.1 4 40 0 0 0 0
+287	189004 512 31 31 0.1 4 40 0 0 0 0
+288	189516 512 31 31 0.1 4 40 0 0 0 0
+289	190028 512 31 31 0.1 4 40 0 0 0 0
+290	190540 512 31 31 0.1 4 40 0 0 0 0
+291	191052 512 31 31 0.1 4 40 0 0 0 0
+292	191564 512 31 31 0.1 4 40 0 0 0 0
+293	192076 512 31 31 0.1 4 40 0 0 0 0
+294	192588 512 31 31 0.1 4 40 0 0 0 0
+295	193100 512 31 31 0.1 4 40 0 0 0 0
+296	193612 512 31 31 0.1 4 40 0 0 0 0
+297	194124 512 31 31 0.1 4 40 0 0 0 0
+298	194636 512 31 31 0.1 4 40 0 0 0 0
+299	195148 512 31 31 0.1 4 40 0 0 0 0
+300	195660 512 31 31 0.1 4 40 0 0 0 0
+301	196172 512 31 31 0.1 4 40 0 0 0 0
+302	196684 512 31 31 0.1 4 40 0 0 0 0
+303	197196 512 31 31 0.1 4 40 0 0 0 0
+304	197708 512 31 31 0.1 4 40 0 0 0 0
+305	198220 512 31 31 0.1 4 40 0 0 0 0
+306	198732 512 31 31 0.1 4 40 0 0 0 0
+307	199244 512 31 31 0.1 4 40 0 0 0 0
+308	199756 512 31 31 0.1 4 40 0 0 0 0
+309	200268 512 31 31 0.1 4 40 0 0 0 0
+310	200780 512 31 31 0.1 4 40 0 0 0 0
+311	201292 512 31 31 0.1 4 40 0 0 0 0
+312	201804 512 31 31 0.1 4 40 0 0 0 0
+313	202316 512 31 31 0.1 4 40 0 0 0 0
+314	202828 512 31 31 0.1 4 40 0 0 0 0
+315	203340 512 31 31 0.1 4 40 0 0 0 0
+316	203852 512 31 31 0.1 4 40 0 0 0 0
+317	204364 512 31 31 0.1 4 40 0 0 0 0
+318	204876 512 31 31 0.1 4 40 0 0 0 0
+319	205388 512 31 31 0.1 4 40 0 0 0 0
+320	205900 512 31 31 0.1 4 40 0 0 0 0
+321	206412 512 31 31 0.1 4 40 0 0 0 0
+322	206924 512 31 31 0.1 4 40 0 0 0 0
+323	207436 512 31 31 0.1 4 40 0 0 0 0
+324	207948 512 31 31 0.1 4 40 0 0 0 0
+325	208460 512 31 31 0.1 4 40 0 0 0 0
+326	208972 512 31 31 0.1 4 40 0 0 0 0
+327	209484 512 31 31 0.1 4 40 0 0 0 0
+328	209996 512 31 31 0.1 4 40 0 0 0 0
+329	210508 512 31 31 0.1 4 40 0 0 0 0
+330	211020 512 31 31 0.1 4 40 0 0 0 0
+331	211532 512 31 31 0.1 4 40 0 0 0 0
+332	212044 512 31 31 0.1 4 40 0 0 0 0
+333	212556 512 31 31 0.1 4 40 0 0 0 0
+334	213068 512 31 31 0.1 4 40 0 0 0 0
+335	213580 512 31 31 0.1 4 40 0 0 0 0
+336	214092 512 31 31 0.1 4 40 0 0 0 0
+337	214604 512 31 31 0.1 4 40 0 0 0 0
+338	215116 512 31 31 0.1 4 40 0 0 0 0
+339	215628 512 31 31 0.1 4 40 0 0 0 0
+340	216140 512 31 31 0.1 4 40 0 0 0 0
+341	216652 512 31 31 0.1 4 40 0 0 0 0
+342	217164 512 31 31 0.1 4 40 0 0 0 0
+343	217676 512 31 31 0.1 4 40 0 0 0 0
+344	218188 512 31 31 0.1 4 40 0 0 0 0
+345	218700 512 31 31 0.1 4 40 0 0 0 0
+346	219212 512 31 31 0.1 4 40 0 0 0 0
+347	219724 512 31 31 0.1 4 40 0 0 0 0
+348	220236 512 31 31 0.1 4 40 0 0 0 0
+349	220748 512 31 31 0.1 4 40 0 0 0 0
+350	221260 512 31 31 0.1 4 40 0 0 0 0
+351	221772 512 31 31 0.1 4 40 0 0 0 0
+352	222284 512 31 31 0.1 4 40 0 0 0 0
+353	222796 512 31 31 0.1 4 40 0 0 0 0
+354	223308 512 31 31 0.1 4 40 0 0 0 0
+355	223820 512 31 31 0.1 4 40 0 0 0 0
+356	224332 512 31 31 0.1 4 40 0 0 0 0
+357	224844 512 31 31 0.1 4 40 0 0 0 0
+358	225356 512 31 31 0.1 4 40 0 0 0 0
+359	225868 512 31 31 0.1 4 40 0 0 0 0
+360	226380 512 31 31 0.1 4 40 0 0 0 0
+361	226892 512 31 31 0.1 4 40 0 0 0 0
+362	227404 512 31 31 0.1 4 40 0 0 0 0
+363	227916 512 31 31 0.1 4 40 0 0 0 0
+364	228428 512 31 31 0.1 4 40 0 0 0 0
+365	228940 512 31 31 0.1 4 40 0 0 0 0
+366	229452 512 31 31 0.1 4 40 0 0 0 0
+367	229964 512 31 31 0.1 4 40 0 0 0 0
+368	230476 512 31 31 0.1 4 40 0 0 0 0
+369	230988 512 31 31 0.1 4 40 0 0 0 0
+370	231500 512 31 31 0.1 4 40 0 0 0 0
+371	232012 512 31 31 0.1 4 40 0 0 0 0
+372	232524 512 31 31 0.1 4 40 0 0 0 0
+373	233036 512 31 31 0.1 4 40 0 0 0 0
+374	233548 512 31 31 0.1 4 40 0 0 0 0
+375	234060 512 31 31 0.1 4 40 0 0 0 0
+376	234572 512 31 31 0.1 4 40 0 0 0 0
+377	235084 512 31 31 0.1 4 40 0 0 0 0
+378	235596 512 31 31 0.1 4 40 0 0 0 0
+379	236108 512 31 31 0.1 4 40 0 0 0 0
+380	236620 512 31 31 0.1 4 40 0 0 0 0
+381	237132 512 31 31 0.1 4 40 0 0 0 0
+382	237644 512 31 31 0.1 4 40 0 0 0 0
+383	238156 512 31 31 0.1 4 40 0 0 0 0
+384	238668 512 31 31 0.1 4 40 0 0 0 0
+385	239180 512 31 31 0.1 4 40 0 0 0 0
+386	239692 512 31 31 0.1 4 40 0 0 0 0
+387	240204 512 31 31 0.1 4 40 0 0 0 0
+388	240716 512 31 31 0.1 4 40 0 0 0 0
+389	241228 512 31 31 0.1 4 40 0 0 0 0
+390	241740 512 31 31 0.1 4 40 0 0 0 0
+391	242252 512 31 31 0.1 4 40 0 0 0 0
+392	242764 512 31 31 0.1 4 40 0 0 0 0
+393	243276 512 31 31 0.1 4 40 0 0 0 0
+394	243788 512 31 31 0.1 4 40 0 0 0 0
+395	244300 512 31 31 0.1 4 40 0 0 0 0
+396	244812 512 31 31 0.1 4 40 0 0 0 0
+397	245324 512 31 31 0.1 4 40 0 0 0 0
+398	245836 512 31 31 0.1 4 40 0 0 0 0
+399	246348 512 31 31 0.1 4 40 0 0 0 0
+400	246860 512 31 31 0.1 4 40 0 0 0 0
+401	247372 512 31 31 0.1 4 40 0 0 0 0
+402	247884 512 31 31 0.1 4 40 0 0 0 0
+403	248396 512 31 31 0.1 4 40 0 0 0 0
+404	248908 512 31 31 0.1 4 40 0 0 0 0
+405	249420 512 31 31 0.1 4 40 0 0 0 0
+406	249932 512 31 31 0.1 4 40 0 0 0 0
+407	250444 512 31 31 0.1 4 40 0 0 0 0
+408	250956 512 31 31 0.1 4 40 0 0 0 0
+409	251468 512 31 31 0.1 4 40 0 0 0 0
+410	251980 512 31 31 0.1 4 40 0 0 0 0
+411	252492 512 31 31 0.1 4 40 0 0 0 0
+412	253004 512 31 31 0.1 4 40 0 0 0 0
+413	253516 512 31 31 0.1 4 40 0 0 0 0
+414	254028 512 31 31 0.1 4 40 0 0 0 0
+415	254540 512 31 31 0.1 4 40 0 0 0 0
+416	255052 512 31 31 0.1 4 40 0 0 0 0
+417	255564 512 31 31 0.1 4 40 0 0 0 0
+418	256076 512 31 31 0.1 4 40 0 0 0 0
+419	256588 512 31 31 0.1 4 40 0 0 0 0
+420	257100 512 31 31 0.1 4 40 0 0 0 0
+421	257612 512 31 31 0.1 4 40 0 0 0 0
+422	258124 512 31 31 0.1 4 40 0 0 0 0
+423	258636 512 31 31 0.1 4 40 0 0 0 0
+424	259148 512 31 31 0.1 4 40 0 0 0 0
+425	259660 512 31 31 0.1 4 40 0 0 0 0
+426	260172 512 31 31 0.1 4 40 0 0 0 0
+427	260684 512 31 31 0.1 4 40 0 0 0 0
+428	261196 512 31 31 0.1 4 40 0 0 0 0
+429	261708 512 31 31 0.1 4 40 0 0 0 0
+430	262220 512 31 31 0.1 4 40 0 0 0 0
+431	262732 512 31 31 0.1 4 40 0 0 0 0
+432	263244 512 31 31 0.1 4 40 0 0 0 0
+433	263756 512 31 31 0.1 4 40 0 0 0 0
+434	264268 512 31 31 0.1 4 40 0 0 0 0
+435	264780 512 31 31 0.1 4 40 0 0 0 0
+436	265292 512 31 31 0.1 4 40 0 0 0 0
+437	265804 512 31 31 0.1 4 40 0 0 0 0
+438	266316 512 31 31 0.1 4 40 0 0 0 0
+439	266828 512 31 31 0.1 4 40 0 0 0 0
+440	267340 512 31 31 0.1 4 40 0 0 0 0
+441	267852 512 31 31 0.1 4 40 0 0 0 0
+442	268364 512 31 31 0.1 4 40 0 0 0 0
+443	268876 512 31 31 0.1 4 40 0 0 0 0
+444	269388 512 31 31 0.1 4 40 0 0 0 0
+445	269900 512 31 31 0.1 4 40 0 0 0 0
+446	270412 512 31 31 0.1 4 40 0 0 0 0
+447	270924 512 31 31 0.1 4 40 0 0 0 0
+448	271436 512 31 31 0.1 4 40 0 0 0 0
+449	271948 512 31 31 0.1 4 40 0 0 0 0
+450	272460 512 31 31 0.1 4 40 0 0 0 0
+451	272972 512 31 31 0.1 4 40 0 0 0 0
+452	273484 512 31 31 0.1 4 40 0 0 0 0
+453	273996 512 31 31 0.1 4 40 0 0 0 0
+454	274508 512 31 31 0.1 4 40 0 0 0 0
+455	275020 512 31 31 0.1 4 40 0 0 0 0
+456	275532 512 31 31 0.1 4 40 0 0 0 0
+457	276044 512 31 31 0.1 4 40 0 0 0 0
+458	276556 512 31 31 0.1 4 40 0 0 0 0
+459	277068 512 31 31 0.1 4 40 0 0 0 0
+460	277580 512 31 31 0.1 4 40 0 0 0 0
+461	278092 512 31 31 0.1 4 40 0 0 0 0
+462	278604 512 31 31 0.1 4 40 0 0 0 0
+463	279116 512 31 31 0.1 4 40 0 0 0 0
+464	279628 512 31 31 0.1 4 40 0 0 0 0
+465	280140 512 31 31 0.1 4 40 0 0 0 0
+466	280652 512 31 31 0.1 4 40 0 0 0 0
+467	281164 512 31 31 0.1 4 40 0 0 0 0
+468	281676 512 31 31 0.1 4 40 0 0 0 0
+469	282188 512 31 31 0.1 4 40 0 0 0 0
+470	282700 512 31 31 0.1 4 40 0 0 0 0
+471	283212 512 31 31 0.1 4 40 0 0 0 0
+472	283724 512 31 31 0.1 4 40 0 0 0 0
+473	284236 512 31 31 0.1 4 40 0 0 0 0
+474	284748 512 31 31 0.1 4 40 0 0 0 0
+475	285260 512 31 31 0.1 4 40 0 0 0 0
+476	285772 512 31 31 0.1 4 40 0 0 0 0
+477	286284 512 31 31 0.1 4 40 0 0 0 0
+478	286796 512 31 31 0.1 4 40 0 0 0 0
+479	287308 512 31 31 0.1 4 40 0 0 0 0
+480	287820 512 31 31 0.1 4 40 0 0 0 0
+481	288332 512 31 31 0.1 4 40 0 0 0 0
+482	288844 512 31 31 0.1 4 40 0 0 0 0
+483	289356 512 31 31 0.1 4 40 0 0 0 0
+484	289868 512 31 31 0.1 4 40 0 0 0 0
+485	290380 512 31 31 0.1 4 40 0 0 0 0
+486	290892 512 31 31 0.1 4 40 0 0 0 0
+487	291404 512 31 31 0.1 4 40 0 0 0 0
+488	291916 512 31 31 0.1 4 40 0 0 0 0
+489	292428 512 31 31 0.1 4 40 0 0 0 0
+490	292940 512 31 31 0.1 4 40 0 0 0 0
+491	293452 512 31 31 0.1 4 40 0 0 0 0
+492	293964 512 31 31 0.1 4 40 0 0 0 0
+493	294476 512 31 31 0.1 4 40 0 0 0 0
+494	294988 512 31 31 0.1 4 40 0 0 0 0
+495	295500 512 31 31 0.1 4 40 0 0 0 0
+496	296012 512 31 31 0.1 4 40 0 0 0 0
+497	296524 512 31 31 0.1 4 40 0 0 0 0
+498	297036 512 31 31 0.1 4 40 0 0 0 0
+499	297548 512 31 31 0.1 4 40 0 0 0 0
+500	298060 512 31 31 0.1 4 40 0 0 0 0
+501	298572 512 31 31 0.1 4 40 0 0 0 0
+502	299084 512 31 31 0.1 4 40 0 0 0 0
+503	299596 512 31 31 0.1 4 40 0 0 0 0
+504	300108 512 31 31 0.1 4 40 0 0 0 0
+505	300620 512 31 31 0.1 4 40 0 0 0 0
+506	301132 512 31 31 0.1 4 40 0 0 0 0
+507	301644 512 31 31 0.1 4 40 0 0 0 0
+508	302156 512 31 31 0.1 4 40 0 0 0 0
+509	302668 512 31 31 0.1 4 40 0 0 0 0
+510	303180 512 31 31 0.1 4 40 0 0 0 0
+511	303692 512 31 31 0.1 4 40 0 0 0 0
+512	304204 512 31 31 0.1 4 40 0 0 0 0
+513	304716 512 31 31 0.1 4 40 0 0 0 0
+514	305228 512 31 31 0.1 4 40 0 0 0 0
+515	305740 512 31 31 0.1 4 40 0 0 0 0
+516	306252 512 31 31 0.1 4 40 0 0 0 0
+517	306764 512 31 31 0.1 4 40 0 0 0 0
+518	307276 512 31 31 0.1 4 40 0 0 0 0
+519	307788 512 31 31 0.1 4 40 0 0 0 0
+520	308300 512 31 31 0.1 4 40 0 0 0 0
+521	308812 512 31 31 0.1 4 40 0 0 0 0
+522	309324 512 31 31 0.1 4 40 0 0 0 0
+523	309836 512 31 31 0.1 4 40 0 0 0 0
+524	310348 512 31 31 0.1 4 40 0 0 0 0
+525	310860 512 31 31 0.1 4 40 0 0 0 0
+526	311372 512 31 31 0.1 4 40 0 0 0 0
+527	311884 512 31 31 0.1 4 40 0 0 0 0
+528	312396 512 31 31 0.1 4 40 0 0 0 0
+529	312908 512 31 31 0.1 4 40 0 0 0 0
+530	313420 512 31 31 0.1 4 40 0 0 0 0
+531	313932 512 31 31 0.1 4 40 0 0 0 0
+532	314444 512 31 31 0.1 4 40 0 0 0 0
+533	314956 512 31 31 0.1 4 40 0 0 0 0
+534	315468 512 31 31 0.1 4 40 0 0 0 0
+535	315980 512 31 31 0.1 4 40 0 0 0 0
+536	316492 512 31 31 0.1 4 40 0 0 0 0
+537	317004 512 31 31 0.1 4 40 0 0 0 0
+538	317516 512 31 31 0.1 4 40 0 0 0 0
+539	318028 512 31 31 0.1 4 40 0 0 0 0
+540	318540 512 31 31 0.1 4 40 0 0 0 0
+541	319052 512 31 31 0.1 4 40 0 0 0 0
+542	319564 512 31 31 0.1 4 40 0 0 0 0
+543	320076 512 31 31 0.1 4 40 0 0 0 0
+544	320588 512 31 31 0.1 4 40 0 0 0 0
+545	321100 512 31 31 0.1 4 40 0 0 0 0
+546	321612 512 31 31 0.1 4 40 0 0 0 0
+547	322124 512 31 31 0.1 4 40 0 0 0 0
+548	322636 512 31 31 0.1 4 40 0 0 0 0
+549	323148 512 31 31 0.1 4 40 0 0 0 0
+550	323660 512 31 31 0.1 4 40 0 0 0 0
+551	324172 512 31 31 0.1 4 40 0 0 0 0
+552	324684 512 31 31 0.1 4 40 0 0 0 0
+553	325196 512 31 31 0.1 4 40 0 0 0 0
+554	325708 512 31 31 0.1 4 40 0 0 0 0
+555	326220 512 31 31 0.1 4 40 0 0 0 0
+556	326732 512 31 31 0.1 4 40 0 0 0 0
+557	327244 512 31 31 0.1 4 40 0 0 0 0
+558	327756 512 31 31 0.1 4 40 0 0 0 0
+559	328268 512 31 31 0.1 4 40 0 0 0 0
+560	328780 512 31 31 0.1 4 40 0 0 0 0
+561	329292 512 31 31 0.1 4 40 0 0 0 0
+562	329804 512 31 31 0.1 4 40 0 0 0 0
+563	330316 512 31 31 0.1 4 40 0 0 0 0
+564	330828 512 31 31 0.1 4 40 0 0 0 0
+565	331340 512 31 31 0.1 4 40 0 0 0 0
+566	331852 512 31 31 0.1 4 40 0 0 0 0
+567	332364 512 31 31 0.1 4 40 0 0 0 0
+568	332876 512 31 31 0.1 4 40 0 0 0 0
+569	333388 512 31 31 0.1 4 40 0 0 0 0
+570	333900 512 31 31 0.1 4 40 0 0 0 0
+571	334412 512 31 31 0.1 4 40 0 0 0 0
+572	334924 512 31 31 0.1 4 40 0 0 0 0
+573	335436 512 31 31 0.1 4 40 0 0 0 0
+574	335948 512 31 31 0.1 4 40 0 0 0 0
+575	336460 512 31 31 0.1 4 40 0 0 0 0
+576	336972 512 31 31 0.1 4 40 0 0 0 0
+577	337484 512 31 31 0.1 4 40 0 0 0 0
+578	337996 512 31 31 0.1 4 40 0 0 0 0
+579	338508 512 31 31 0.1 4 40 0 0 0 0
+580	339020 512 31 31 0.1 4 40 0 0 0 0
+581	339532 512 31 31 0.1 4 40 0 0 0 0
+582	340044 512 31 31 0.1 4 40 0 0 0 0
+583	340556 512 31 31 0.1 4 40 0 0 0 0
+584	341068 512 31 31 0.1 4 40 0 0 0 0
+585	341580 512 31 31 0.1 4 40 0 0 0 0
+586	342092 512 31 31 0.1 4 40 0 0 0 0
+587	342604 512 31 31 0.1 4 40 0 0 0 0
+588	343116 512 31 31 0.1 4 40 0 0 0 0
+589	343628 512 31 31 0.1 4 40 0 0 0 0
+590	344140 512 31 31 0.1 4 40 0 0 0 0
+591	344652 512 31 31 0.1 4 40 0 0 0 0
+592	345164 512 31 31 0.1 4 40 0 0 0 0
+593	345676 512 31 31 0.1 4 40 0 0 0 0
+594	346188 512 31 31 0.1 4 40 0 0 0 0
+595	346700 512 31 31 0.1 4 40 0 0 0 0
+596	347212 512 31 31 0.1 4 40 0 0 0 0
+597	347724 512 31 31 0.1 4 40 0 0 0 0
+598	348236 512 31 31 0.1 4 40 0 0 0 0
+599	348748 512 31 31 0.1 4 40 0 0 0 0
+600	349260 512 31 31 0.1 4 40 0 0 0 0
+601	349772 512 31 31 0.1 4 40 0 0 0 0
+602	350284 512 31 31 0.1 4 40 0 0 0 0
+603	350796 512 31 31 0.1 4 40 0 0 0 0
+604	351308 512 31 31 0.1 4 40 0 0 0 0
+605	351820 512 31 31 0.1 4 40 0 0 0 0
+606	352332 512 31 31 0.1 4 40 0 0 0 0
+607	352844 512 31 31 0.1 4 40 0 0 0 0
+608	353356 512 31 31 0.1 4 40 0 0 0 0
+609	353868 512 31 31 0.1 4 40 0 0 0 0
+610	354380 512 31 31 0.1 4 40 0 0 0 0
+611	354892 512 31 31 0.1 4 40 0 0 0 0
+612	355404 512 31 31 0.1 4 40 0 0 0 0
+613	355916 512 31 31 0.1 4 40 0 0 0 0
+614	356428 512 31 31 0.1 4 40 0 0 0 0
+615	356940 512 31 31 0.1 4 40 0 0 0 0
+616	357452 512 31 31 0.1 4 40 0 0 0 0
+617	357964 512 31 31 0.1 4 40 0 0 0 0
+618	358476 512 31 31 0.1 4 40 0 0 0 0
+619	358988 512 31 31 0.1 4 40 0 0 0 0
+620	359500 512 31 31 0.1 4 40 0 0 0 0
+621	360012 512 31 31 0.1 4 40 0 0 0 0
+622	360524 512 31 31 0.1 4 40 0 0 0 0
+623	361036 512 31 31 0.1 4 40 0 0 0 0
+624	361548 512 31 31 0.1 4 40 0 0 0 0
+625	362060 512 31 31 0.1 4 40 0 0 0 0
+626	362572 512 31 31 0.1 4 40 0 0 0 0
+627	363084 512 31 31 0.1 4 40 0 0 0 0
+628	363596 512 31 31 0.1 4 40 0 0 0 0
+

@@ -1,0 +1,1512 @@
+file 143553 1745910908                                          
+version 3
+run Gcl-0-20250429-07:14:26-7463
+attr configname Gcl
+attr datetime 20250429-07:14:26
+attr datetimef 20250429-071426
+attr experiment Gcl
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network d6g.simulations.cooperativemanufacturing.CooperativeManufacturing
+attr processid 7463
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config image-path ../../../inet/images
+config *.detCom.nwtt.eth[*].macLayer.queue.transmissionGate[0].initiallyOpen false
+config *.detCom.nwtt.eth[*].macLayer.queue.transmissionGate[0].offset 0s
+config *.detCom.nwtt.eth[*].macLayer.queue.transmissionGate[0].durations []
+config *.detCom.nwtt.eth[*].macLayer.queue.transmissionGate[1].initiallyOpen true
+config *.detCom.nwtt.eth[*].macLayer.queue.transmissionGate[1].offset 819.95us
+config *.detCom.nwtt.eth[*].macLayer.queue.transmissionGate[1].durations [161us,839us]
+config network d6g.simulations.cooperativemanufacturing.CooperativeManufacturing
+config sim-time-limit 10s
+config description "Baseline Scenario with 6gDetCom node"
+config **.displayGateSchedules false
+config **.gateFilter "\"**.eth[1].**\""
+config **.gateScheduleVisualizer.height 16
+config **.gateScheduleVisualizer.placementHint "\"top\""
+
+vector 0 CooperativeManufacturing.agv1.eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 1 CooperativeManufacturing.agv1.eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 2 CooperativeManufacturing.agv1.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 3 CooperativeManufacturing.agv1.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 4 CooperativeManufacturing.agv1.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 5 CooperativeManufacturing.agv2.eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 6 CooperativeManufacturing.agv2.eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 7 CooperativeManufacturing.agv2.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 8 CooperativeManufacturing.agv2.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 9 CooperativeManufacturing.agv2.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 10 CooperativeManufacturing.detCom.dstt[0].eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 11 CooperativeManufacturing.detCom.dstt[0].eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 12 CooperativeManufacturing.detCom.dstt[0].tt[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 13 CooperativeManufacturing.detCom.dstt[0].tt[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 14 CooperativeManufacturing.detCom.dstt[0].tt[1].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 15 CooperativeManufacturing.detCom.dstt[0].tt[1].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 16 CooperativeManufacturing.detCom.dstt[1].eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 17 CooperativeManufacturing.detCom.dstt[1].eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 18 CooperativeManufacturing.detCom.dstt[1].tt[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 19 CooperativeManufacturing.detCom.dstt[1].tt[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 20 CooperativeManufacturing.detCom.dstt[1].tt[1].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 21 CooperativeManufacturing.detCom.dstt[1].tt[1].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 22 CooperativeManufacturing.detCom.nwtt.eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 23 CooperativeManufacturing.detCom.nwtt.eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 24 CooperativeManufacturing.detCom.nwtt.tt[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 25 CooperativeManufacturing.detCom.nwtt.tt[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 26 CooperativeManufacturing.detCom.nwtt.tt[1].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 27 CooperativeManufacturing.detCom.nwtt.tt[1].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 28 CooperativeManufacturing.processingCell.bridge1.eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 29 CooperativeManufacturing.processingCell.bridge1.eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 30 CooperativeManufacturing.processingCell.bridge1.eth[1].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 31 CooperativeManufacturing.processingCell.bridge1.eth[1].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 32 CooperativeManufacturing.processingCell.bridge1.eth[2].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 33 CooperativeManufacturing.processingCell.bridge1.eth[2].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 34 CooperativeManufacturing.processingCell.bridge2.eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 35 CooperativeManufacturing.processingCell.bridge2.eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 36 CooperativeManufacturing.processingCell.bridge2.eth[1].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 37 CooperativeManufacturing.processingCell.bridge2.eth[1].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 38 CooperativeManufacturing.processingCell.swarmStatus.eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 39 CooperativeManufacturing.processingCell.swarmStatus.eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 40 CooperativeManufacturing.processingCell.swarmStatus.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 41 CooperativeManufacturing.processingCell.swarmStatus.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 42 CooperativeManufacturing.processingCell.swarmStatus.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 43 CooperativeManufacturing.processingCell.swarmControl.eth[0].phyLayer.interFrameGapInserter interpacketGap:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(interpacketGapStarted) - count(interpacketGapEnded)"
+attr title "interpacket gap state"
+attr type int
+vector 44 CooperativeManufacturing.processingCell.swarmControl.eth[0].phyLayer.transmitter transmitting:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "count(transmissionStarted) - count(transmissionEnded)"
+attr title "transmitting state"
+attr type int
+vector 45 CooperativeManufacturing.processingCell.swarmControl.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 46 CooperativeManufacturing.processingCell.swarmControl.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 47 CooperativeManufacturing.processingCell.swarmControl.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 48 CooperativeManufacturing.agv1.eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 49 CooperativeManufacturing.agv1.eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 50 CooperativeManufacturing.agv1.eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 51 CooperativeManufacturing.agv1.eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 52 CooperativeManufacturing.agv2.eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 53 CooperativeManufacturing.agv2.eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 54 CooperativeManufacturing.agv2.eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 55 CooperativeManufacturing.agv2.eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 56 CooperativeManufacturing.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 57 CooperativeManufacturing.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 58 CooperativeManufacturing.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 59 CooperativeManufacturing.detCom.dstt[0].eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 60 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 61 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 62 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 63 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 64 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 65 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 66 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 67 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 68 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 69 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 70 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 71 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 72 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 73 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 74 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 75 CooperativeManufacturing.detCom.dstt[0].tt[0].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 76 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 77 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 78 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 79 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 80 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 81 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 82 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 83 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 84 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 85 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 86 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 87 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 88 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 89 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 90 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 91 CooperativeManufacturing.detCom.dstt[0].tt[1].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 92 CooperativeManufacturing.detCom.dstt[1].eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 93 CooperativeManufacturing.detCom.dstt[1].eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 94 CooperativeManufacturing.detCom.dstt[1].eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 95 CooperativeManufacturing.detCom.dstt[1].eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 96 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 97 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 98 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 99 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 100 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 101 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 102 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 103 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 104 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 105 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 106 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 107 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 108 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 109 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 110 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 111 CooperativeManufacturing.detCom.dstt[1].tt[0].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 112 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 113 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 114 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 115 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 116 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 117 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 118 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 119 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 120 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 121 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 122 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 123 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 124 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 125 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 126 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 127 CooperativeManufacturing.detCom.dstt[1].tt[1].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 128 CooperativeManufacturing.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 129 CooperativeManufacturing.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 130 CooperativeManufacturing.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 131 CooperativeManufacturing.detCom.nwtt.eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 132 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 133 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 134 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 135 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 136 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 137 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 138 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 139 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 140 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 141 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 142 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 143 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 144 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 145 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 146 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 147 CooperativeManufacturing.detCom.nwtt.tt[0].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 148 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 149 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 150 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 151 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 152 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[2] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 153 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[2] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 154 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[3] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 155 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[3] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 156 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[4] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 157 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[4] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 158 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[5] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 159 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[5] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 160 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[6] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 161 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[6] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 162 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[7] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 163 CooperativeManufacturing.detCom.nwtt.tt[1].macLayer.queue.transmissionGate[7] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 164 CooperativeManufacturing.processingCell.bridge1.eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 165 CooperativeManufacturing.processingCell.bridge1.eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 166 CooperativeManufacturing.processingCell.bridge1.eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 167 CooperativeManufacturing.processingCell.bridge1.eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 168 CooperativeManufacturing.processingCell.bridge1.eth[1].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 169 CooperativeManufacturing.processingCell.bridge1.eth[1].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 170 CooperativeManufacturing.processingCell.bridge1.eth[1].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 171 CooperativeManufacturing.processingCell.bridge1.eth[1].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 172 CooperativeManufacturing.processingCell.bridge1.eth[2].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 173 CooperativeManufacturing.processingCell.bridge1.eth[2].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 174 CooperativeManufacturing.processingCell.bridge1.eth[2].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 175 CooperativeManufacturing.processingCell.bridge1.eth[2].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 176 CooperativeManufacturing.processingCell.bridge2.eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 177 CooperativeManufacturing.processingCell.bridge2.eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 178 CooperativeManufacturing.processingCell.bridge2.eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 179 CooperativeManufacturing.processingCell.bridge2.eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 180 CooperativeManufacturing.processingCell.bridge2.eth[1].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 181 CooperativeManufacturing.processingCell.bridge2.eth[1].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 182 CooperativeManufacturing.processingCell.bridge2.eth[1].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 183 CooperativeManufacturing.processingCell.bridge2.eth[1].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 184 CooperativeManufacturing.processingCell.swarmStatus.eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 185 CooperativeManufacturing.processingCell.swarmStatus.eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 186 CooperativeManufacturing.processingCell.swarmStatus.eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 187 CooperativeManufacturing.processingCell.swarmStatus.eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 188 CooperativeManufacturing.processingCell.swarmControl.eth[0].macLayer.queue.transmissionGate[0] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 189 CooperativeManufacturing.processingCell.swarmControl.eth[0].macLayer.queue.transmissionGate[0] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+vector 190 CooperativeManufacturing.processingCell.swarmControl.eth[0].macLayer.queue.transmissionGate[1] gateState:vector ETV
+attr enum CLOSED,OPEN
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source gateStateChanged
+attr title "gate state"
+attr type enum
+vector 191 CooperativeManufacturing.processingCell.swarmControl.eth[0].macLayer.queue.transmissionGate[1] guardBandState:vector ETV
+attr enum ON,OFF
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source guardBandStateChanged
+attr title "guard band state"
+attr type enum
+0	53536 16 0 0 0 0 2 0 0 0 0
+1	53552 16 0 0 0 0 2 0 0 0 0
+2	53568 8 0 0 0 0 1 0 0 0 0
+3	53576 8 0 0 0 0 1 0 0 0 0
+4	53584 8 0 0 0 0 1 0 0 0 0
+5	53592 16 0 0 0 0 2 0 0 0 0
+6	53608 16 0 0 0 0 2 0 0 0 0
+7	53624 8 0 0 0 0 1 0 0 0 0
+8	53632 8 0 0 0 0 1 0 0 0 0
+9	53640 8 0 0 0 0 1 0 0 0 0
+10	53648 18 0 0 0 0 2 0 0 0 0
+11	53666 18 0 0 0 0 2 0 0 0 0
+12	53684 18 0 0 0 0 2 0 0 0 0
+13	53702 18 0 0 0 0 2 0 0 0 0
+14	53720 18 0 0 0 0 2 0 0 0 0
+15	53738 18 0 0 0 0 2 0 0 0 0
+16	53756 18 0 0 0 0 2 0 0 0 0
+17	53774 18 0 0 0 0 2 0 0 0 0
+18	53792 18 0 0 0 0 2 0 0 0 0
+19	53810 18 0 0 0 0 2 0 0 0 0
+20	53828 18 0 0 0 0 2 0 0 0 0
+21	53846 18 0 0 0 0 2 0 0 0 0
+22	53864 18 0 0 0 0 2 0 0 0 0
+23	53882 18 0 0 0 0 2 0 0 0 0
+24	53900 18 0 0 0 0 2 0 0 0 0
+25	53918 18 0 0 0 0 2 0 0 0 0
+26	53936 18 0 0 0 0 2 0 0 0 0
+27	53954 18 0 0 0 0 2 0 0 0 0
+28	53972 18 0 0 0 0 2 0 0 0 0
+29	53990 18 0 0 0 0 2 0 0 0 0
+30	54008 18 0 0 0 0 2 0 0 0 0
+31	54026 18 0 0 0 0 2 0 0 0 0
+32	54044 18 0 0 0 0 2 0 0 0 0
+33	54062 18 0 0 0 0 2 0 0 0 0
+34	54080 18 0 0 0 0 2 0 0 0 0
+35	54098 18 0 0 0 0 2 0 0 0 0
+36	54116 18 0 0 0 0 2 0 0 0 0
+37	54134 18 0 0 0 0 2 0 0 0 0
+38	54152 18 0 0 0 0 2 0 0 0 0
+39	54170 18 0 0 0 0 2 0 0 0 0
+40	54188 9 0 0 0 0 1 0 0 0 0
+41	54197 9 0 0 0 0 1 0 0 0 0
+42	54206 9 0 0 0 0 1 0 0 0 0
+43	54215 18 0 0 0 0 2 0 0 0 0
+44	54233 18 0 0 0 0 2 0 0 0 0
+45	54251 9 0 0 0 0 1 0 0 0 0
+46	54260 9 0 0 0 0 1 0 0 0 0
+47	54269 9 0 0 0 0 1 0 0 0 0
+48	54278 9 0 0 0 0 1 1 1 1 1
+49	54287 9 0 0 0 0 1 0 0 0 0
+50	54296 9 0 0 0 0 1 1 1 1 1
+51	54305 9 0 0 0 0 1 0 0 0 0
+52	54314 9 0 0 0 0 1 1 1 1 1
+53	54323 9 0 0 0 0 1 0 0 0 0
+54	54332 9 0 0 0 0 1 1 1 1 1
+55	54341 9 0 0 0 0 1 0 0 0 0
+56	54350 9 0 0 0 0 1 1 1 1 1
+57	54359 9 0 0 0 0 1 0 0 0 0
+58	54368 9 0 0 0 0 1 1 1 1 1
+59	54377 9 0 0 0 0 1 0 0 0 0
+60	54386 9 0 0 0 0 1 1 1 1 1
+61	54395 9 0 0 0 0 1 0 0 0 0
+62	54404 9 0 0 0 0 1 1 1 1 1
+63	54413 9 0 0 0 0 1 0 0 0 0
+64	54422 9 0 0 0 0 1 1 1 1 1
+65	54431 9 0 0 0 0 1 0 0 0 0
+66	54440 9 0 0 0 0 1 1 1 1 1
+67	54449 9 0 0 0 0 1 0 0 0 0
+68	54458 9 0 0 0 0 1 1 1 1 1
+69	54467 9 0 0 0 0 1 0 0 0 0
+70	54476 9 0 0 0 0 1 1 1 1 1
+71	54485 9 0 0 0 0 1 0 0 0 0
+72	54494 9 0 0 0 0 1 1 1 1 1
+73	54503 9 0 0 0 0 1 0 0 0 0
+74	54512 9 0 0 0 0 1 1 1 1 1
+75	54521 9 0 0 0 0 1 0 0 0 0
+76	54530 9 0 0 0 0 1 1 1 1 1
+77	54539 9 0 0 0 0 1 0 0 0 0
+78	54548 9 0 0 0 0 1 1 1 1 1
+79	54557 9 0 0 0 0 1 0 0 0 0
+80	54566 9 0 0 0 0 1 1 1 1 1
+81	54575 9 0 0 0 0 1 0 0 0 0
+82	54584 9 0 0 0 0 1 1 1 1 1
+83	54593 9 0 0 0 0 1 0 0 0 0
+84	54602 9 0 0 0 0 1 1 1 1 1
+85	54611 9 0 0 0 0 1 0 0 0 0
+86	54620 9 0 0 0 0 1 1 1 1 1
+87	54629 9 0 0 0 0 1 0 0 0 0
+88	54638 9 0 0 0 0 1 1 1 1 1
+89	54647 9 0 0 0 0 1 0 0 0 0
+90	54656 9 0 0 0 0 1 1 1 1 1
+91	54665 9 0 0 0 0 1 0 0 0 0
+92	54674 9 0 0 0 0 1 1 1 1 1
+93	54683 9 0 0 0 0 1 0 0 0 0
+94	54692 9 0 0 0 0 1 1 1 1 1
+95	54701 9 0 0 0 0 1 0 0 0 0
+96	54710 9 0 0 0 0 1 1 1 1 1
+97	54719 9 0 0 0 0 1 0 0 0 0
+98	54728 9 0 0 0 0 1 1 1 1 1
+99	54737 9 0 0 0 0 1 0 0 0 0
+100	54746 10 0 0 0 0 1 1 1 1 1
+101	54756 10 0 0 0 0 1 0 0 0 0
+102	54766 10 0 0 0 0 1 1 1 1 1
+103	54776 10 0 0 0 0 1 0 0 0 0
+104	54786 10 0 0 0 0 1 1 1 1 1
+105	54796 10 0 0 0 0 1 0 0 0 0
+106	54806 10 0 0 0 0 1 1 1 1 1
+107	54816 10 0 0 0 0 1 0 0 0 0
+108	54826 10 0 0 0 0 1 1 1 1 1
+109	54836 10 0 0 0 0 1 0 0 0 0
+110	54846 10 0 0 0 0 1 1 1 1 1
+111	54856 10 0 0 0 0 1 0 0 0 0
+112	54866 10 0 0 0 0 1 1 1 1 1
+113	54876 10 0 0 0 0 1 0 0 0 0
+114	54886 10 0 0 0 0 1 1 1 1 1
+115	54896 10 0 0 0 0 1 0 0 0 0
+116	54906 10 0 0 0 0 1 1 1 1 1
+117	54916 10 0 0 0 0 1 0 0 0 0
+118	54926 10 0 0 0 0 1 1 1 1 1
+119	54936 10 0 0 0 0 1 0 0 0 0
+120	54946 10 0 0 0 0 1 1 1 1 1
+121	54956 10 0 0 0 0 1 0 0 0 0
+122	54966 10 0 0 0 0 1 1 1 1 1
+123	54976 10 0 0 0 0 1 0 0 0 0
+124	54986 10 0 0 0 0 1 1 1 1 1
+125	54996 10 0 0 0 0 1 0 0 0 0
+126	55006 10 0 0 0 0 1 1 1 1 1
+127	55016 10 0 0 0 0 1 0 0 0 0
+128	55026 10 0 0 0 0 1 0 0 0 0
+129	55036 10 0 0 0 0 1 0 0 0 0
+130	55046 87478 0 8017 0 1.99934105 4001 0 1 2000 2000
+131	142524 10 0 0 0 0 1 0 0 0 0
+132	142534 10 0 0 0 0 1 1 1 1 1
+133	142544 10 0 0 0 0 1 0 0 0 0
+134	142554 10 0 0 0 0 1 1 1 1 1
+135	142564 10 0 0 0 0 1 0 0 0 0
+136	142574 10 0 0 0 0 1 1 1 1 1
+137	142584 10 0 0 0 0 1 0 0 0 0
+138	142594 10 0 0 0 0 1 1 1 1 1
+139	142604 10 0 0 0 0 1 0 0 0 0
+140	142614 10 0 0 0 0 1 1 1 1 1
+141	142624 10 0 0 0 0 1 0 0 0 0
+142	142634 10 0 0 0 0 1 1 1 1 1
+143	142644 10 0 0 0 0 1 0 0 0 0
+144	142654 10 0 0 0 0 1 1 1 1 1
+145	142664 10 0 0 0 0 1 0 0 0 0
+146	142674 10 0 0 0 0 1 1 1 1 1
+147	142684 10 0 0 0 0 1 0 0 0 0
+148	142694 10 0 0 0 0 1 1 1 1 1
+149	142704 10 0 0 0 0 1 0 0 0 0
+150	142714 10 0 0 0 0 1 1 1 1 1
+151	142724 10 0 0 0 0 1 0 0 0 0
+152	142734 10 0 0 0 0 1 1 1 1 1
+153	142744 10 0 0 0 0 1 0 0 0 0
+154	142754 10 0 0 0 0 1 1 1 1 1
+155	142764 10 0 0 0 0 1 0 0 0 0
+156	142774 10 0 0 0 0 1 1 1 1 1
+157	142784 10 0 0 0 0 1 0 0 0 0
+158	142794 10 0 0 0 0 1 1 1 1 1
+159	142804 10 0 0 0 0 1 0 0 0 0
+160	142814 10 0 0 0 0 1 1 1 1 1
+161	142824 10 0 0 0 0 1 0 0 0 0
+162	142834 10 0 0 0 0 1 1 1 1 1
+163	142844 10 0 0 0 0 1 0 0 0 0
+164	142854 10 0 0 0 0 1 1 1 1 1
+165	142864 10 0 0 0 0 1 0 0 0 0
+166	142874 10 0 0 0 0 1 1 1 1 1
+167	142884 10 0 0 0 0 1 0 0 0 0
+168	142894 10 0 0 0 0 1 1 1 1 1
+169	142904 10 0 0 0 0 1 0 0 0 0
+170	142914 10 0 0 0 0 1 1 1 1 1
+171	142924 10 0 0 0 0 1 0 0 0 0
+172	142934 10 0 0 0 0 1 1 1 1 1
+173	142944 10 0 0 0 0 1 0 0 0 0
+174	142954 10 0 0 0 0 1 1 1 1 1
+175	142964 10 0 0 0 0 1 0 0 0 0
+176	142974 10 0 0 0 0 1 1 1 1 1
+177	142984 10 0 0 0 0 1 0 0 0 0
+178	142994 10 0 0 0 0 1 1 1 1 1
+179	143004 10 0 0 0 0 1 0 0 0 0
+180	143014 10 0 0 0 0 1 1 1 1 1
+181	143024 10 0 0 0 0 1 0 0 0 0
+182	143034 10 0 0 0 0 1 1 1 1 1
+183	143044 10 0 0 0 0 1 0 0 0 0
+184	143054 10 0 0 0 0 1 1 1 1 1
+185	143064 10 0 0 0 0 1 0 0 0 0
+186	143074 10 0 0 0 0 1 1 1 1 1
+187	143084 10 0 0 0 0 1 0 0 0 0
+188	143094 10 0 0 0 0 1 1 1 1 1
+189	143104 10 0 0 0 0 1 0 0 0 0
+190	143114 10 0 0 0 0 1 1 1 1 1
+191	143124 10 0 0 0 0 1 0 0 0 0
+130	143134 418 8019 8055 2.00018005 2.00918005 19 0 1 10 10
+

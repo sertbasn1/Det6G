@@ -1,0 +1,33 @@
+/*
+ * SimpleUdpSourceApp.h
+ *
+ *  Created on: Apr 22, 2025
+ *      Author: root
+ */
+
+#ifndef INET_APPLICATIONS_UDPAPP_SIMPLEUDPSOURCEAPP_H_
+#define INET_APPLICATIONS_UDPAPP_SIMPLEUDPSOURCEAPP_H_
+
+#include "inet/applications/base/ApplicationBase.h"
+#include "inet/transportlayer/contract/udp/UdpSocket.h"
+
+namespace inet {
+
+class INET_API SimpleUdpSourceApp : public ApplicationBase, public UdpSocket::ICallback
+{
+  public:
+    SimpleUdpSourceApp() {}
+    virtual ~SimpleUdpSourceApp();
+
+  protected:
+    virtual void initialize(int stage) override;
+    virtual void handleMessageWhenUp(cMessage *msg) override;
+    void  sendStreamRequestMessage();
+
+
+};
+
+} // namespace inet
+
+
+#endif /* INET_APPLICATIONS_UDPAPP_SIMPLEUDPSOURCEAPP_H_ */

@@ -1,0 +1,32 @@
+/*
+ * CentralNetworkConfig.cc
+ *
+ *  Created on: May 5, 2025
+ *      Author: root
+ */
+
+
+#include <omnetpp.h>
+#include "CentralNetworkConfig.h"
+using namespace omnetpp;
+
+class CentralNetworkConfig : public cSimpleModule
+{
+  protected:
+    virtual void initialize();
+    virtual void handleMessage(cMessage *msg);
+};
+
+// register module class with OMNeT++
+Define_Module(CentralNetworkConfig);
+
+void CentralNetworkConfig::initialize()
+{
+    EV << "Hello World!\n";
+}
+
+void CentralNetworkConfig::handleMessage(cMessage *msg)
+{
+    delete msg; // just discard everything we receive
+}
+

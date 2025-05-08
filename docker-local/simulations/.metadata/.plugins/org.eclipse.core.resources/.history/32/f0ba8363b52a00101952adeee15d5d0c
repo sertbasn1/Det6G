@@ -1,0 +1,158 @@
+//
+// Copyright (C) 2020 OpenSim Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
+
+
+#include "inet/queueing/source/ActivePacketSource.h"
+
+#define MSGKIND_SEND_TA                 9
+namespace inet {
+namespace queueing {
+
+Define_Module(ActivePacketSource);
+
+void ActivePacketSource::initialize(int stage)
+{
+    ClockUserModuleMixin::initialize(stage);
+    if (stage == INITSTAGE_LOCAL) {
+        initialProductionOffset = par("initialProductionOffset");
+        productionIntervalParameter = &par("productionInterval");
+        productionTimer = new ClockEvent("ProductionTimer");
+        scheduleForAbsoluteTime = par("scheduleForAbsoluteTime");
+        streamingEnabled = par("streamingEnabled");
+
+        if(streamingEnabled==false){\
+            //SRP like stream registration will be triggered
+            std::cout << "-----> ActivePacketSource initialized at " << (this->getParentModule())->getParentModule()->getFullName() << endl;
+            cMessage *event = new cMessage("TA msg");
+            event->setKind(MSGKIND_SEND_TA);
+            std::cout << "-----> START time is " << initialProductionOffset << endl;
+            scheduleAt(initialProductionOffset.asSimTime(), event);
+        }
+
+    }
+    else if (stage == INITSTAGE_QUEUEING) {
+        checkPacketOperationSupport(outputGate);
+        if (!productionTimer->isScheduled())
+            scheduleProductionTimerAndProducePacket();
+    }
+}
+
+void ActivePacketSource::handleMessage(cMessage *message)
+{
+
+    if (message->getKind()== MSGKIND_SEND_TA){
+        sendStreamRequestMessage();
+        std::cout <<  this->getFullPath() << simTime() << "TA generation triggered" << endl;
+        delete message;
+        return;
+    }
+
+    if (message == productionTimer) {
+        if (consumer == nullptr || consumer->canPushSomePacket(outputGate->getPathEndGate())) {
+            scheduleProductionTimer(productionIntervalParameter->doubleValue());
+            producePacket();
+        }
+    }
+    else
+        throw cRuntimeError("Unknown message");
+}
+
+void ActivePacketSource::handleParameterChange(const char *name)
+{
+    if (!strcmp(name, "initialProductionOffset"))
+        initialProductionOffset = par("initialProductionOffset");
+
+    if (!strcmp(name, "streamingEnabled"))
+        streamingEnabled = par("streamingEnabled");
+
+}
+
+void ActivePacketSource::scheduleProductionTimer(clocktime_t delay)
+{
+    if (scheduleForAbsoluteTime)
+        scheduleClockEventAt(getClockTime() + delay, productionTimer);
+    else
+        scheduleClockEventAfter(delay, productionTimer);
+}
+
+void ActivePacketSource::scheduleProductionTimerAndProducePacket()
+{
+    if (!initialProductionOffsetScheduled && initialProductionOffset >= CLOCKTIME_ZERO  && streamingEnabled==true) {
+        scheduleProductionTimer(initialProductionOffset);
+        initialProductionOffsetScheduled = true;
+    }
+    else if (streamingEnabled==true && (consumer == nullptr || consumer->canPushSomePacket(outputGate->getPathEndGate()))) {
+        scheduleProductionTimer(productionIntervalParameter->doubleValue());
+        producePacket();
+    }
+}
+
+void ActivePacketSource::producePacket()
+{
+    auto packet = createPacket();
+    EV_INFO << "Producing packet" << EV_FIELD(packet) << EV_ENDL;
+    emit(packetPushedSignal, packet);
+    pushOrSendPacket(packet, outputGate, consumer);
+    updateDisplayString();
+}
+
+void ActivePacketSource::handleCanPushPacketChanged(cGate *gate)
+{
+    Enter_Method("handleCanPushPacketChanged");
+    if (!productionTimer->isScheduled())
+        scheduleProductionTimerAndProducePacket();
+}
+
+void ActivePacketSource::handlePushPacketProcessed(Packet *packet, cGate *gate, bool successful)
+{
+    Enter_Method("handlePushPacketProcessed");
+}
+
+
+void ActivePacketSource::sendStreamRequestMessage()
+{
+    auto packet = createPacket();
+    packet->setKind(MSGKIND_SEND_TA);
+
+    cModule * devBase = ((this->getParentModule())->getParentModule()); //simpleTsn.device1
+    cModule * base = devBase->getParentModule();
+    cModule * targetModule = (base->getSubmodule("tsnController"))->getSubmodule("cuc");
+
+//    std::cout << "#" << devBase->getFullPath() << "#" << targetModule->getFullPath() << " of gate "<< 0 << endl;
+//    std::string str(devBase->getFullName());
+//    int index = std::stoi(str.substr(6, str.length()));
+//    std::cout << "#index is " << index << endl;
+
+    //cGate *targetGate = targetModule->gate("userInterfaces", index-1);
+    cGate *targetGate = targetModule->gate("userInterfaces$i");//, index-1);
+    sendDirect(packet, targetGate);
+
+//    for (std::list<BGBuffer*>::const_iterator buf = bgbuffers.begin(); buf != bgbuffers.end(); ++buf)
+//    {
+//        EthernetIIFrameWithQTag *frame = new EthernetIIFrameWithQTag("TA");
+//        frame->setDest(this->destAddress);
+//        cPacket *payload_packet = new cPacket();
+//        payload_packet->setByteLength(static_cast<int64_t>(getPayloadBytes()));
+//        frame->encapsulate(payload_packet);
+//        frame->setPcp(priority);
+//        frame->setVID(this->vid);
+//        frame->setSchedulingPriority(static_cast<short>(SCHEDULING_PRIORITY_OFFSET_8021Q - priority));
+//        //Padding
+//        if (frame->getByteLength() < MIN_ETHERNET_FRAME_BYTES)
+//        {
+//            frame->setByteLength(MIN_ETHERNET_FRAME_BYTES);
+//        }
+//
+//        //cout<<"Host: Talker register at "<<simTime()<<endl;
+//        frame->setDisplayString("TA");
+//        sendDirect(frame, (*buf)->gate("in"));
+//    }
+
+}
+
+} // namespace queueing
+} // namespace inet
+

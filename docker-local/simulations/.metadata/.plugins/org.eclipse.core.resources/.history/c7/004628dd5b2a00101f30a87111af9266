@@ -1,0 +1,27 @@
+/*
+ * CentralNetworkConfig.cc
+ *
+ *  Created on: May 5, 2025
+ *      Author: root
+ */
+
+
+#include <omnetpp.h>
+using namespace omnetpp;
+
+class CentralNetworkConfig : public cSimpleModule
+{
+  protected:
+    virtual void initialize();
+};
+
+
+namespace inet{
+    Define_Module(CentralNetworkConfig);
+
+    void CentralNetworkConfig::initialize()
+    {
+        EV << "Hello World!\n";
+    }
+
+}

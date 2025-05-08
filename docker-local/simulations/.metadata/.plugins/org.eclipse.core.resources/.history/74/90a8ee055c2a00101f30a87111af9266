@@ -1,0 +1,23 @@
+/*
+ * CentralNetworkConfig.h
+ *
+ *  Created on: May 6, 2025
+ *      Author: root
+ */
+
+#ifndef INET_CONFIGURATOR_CENTRALNETWORKCONFIG_H_
+#define INET_CONFIGURATOR_CENTRALNETWORKCONFIG_H_
+
+
+namespace inet {
+    class CentralNetworkConfig  {
+        public:
+            virtual void initialize();
+            //virtual void handleMessage(cMessage *msg);
+    };
+
+}
+
+
+
+#endif /* INET_CONFIGURATOR_CENTRALNETWORKCONFIG_H_ */

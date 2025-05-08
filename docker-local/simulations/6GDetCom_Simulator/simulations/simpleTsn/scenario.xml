@@ -1,0 +1,3 @@
+<scenario>
+       <set-param t="3" module="device1.app[0].source" par="productionInterval" value="10s"/>
+</scenario>

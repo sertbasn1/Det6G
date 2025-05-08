@@ -1,0 +1,75 @@
+package d6g.simulations.simpleTsn;
+
+import d6g.devices.DetCom;
+import d6g.devices.tsntranslator.TTChannel;
+import d6g.devices.tsntranslator.TsnTranslator;
+import d6g.distribution.histogram.Histogram;
+import d6g.distribution.histogram.HistogramContainer;
+import d6g.networks.DetComNetworkBase;
+import inet.node.ethernet.EthernetLink;
+import inet.node.tsn.TsnDevice;
+import inet.node.tsn.TsnSwitch;
+import inet.common.scenario.ScenarioManager;
+import inet.configurator.TsnController;
+import inet.node.ethernet.Eth100M;
+import inet.common.misc.ThruputMeteringChannel;
+
+// Includes a HistogramContainer.
+network simpleTsn extends DetComNetworkBase
+{
+    @display("bgb=892,774");
+    types:
+        channel controlplane extends ThruputMeteringChannel
+        {
+            delay = 1us;
+            datarate = 1Gbps;
+            thruputDisplayFormat = "u";
+        }
+
+    submodules:
+        tsnController: TsnController {
+            @display("p=611,56");
+        }
+
+        scenarioManager: ScenarioManager {
+            @display("p=720,659");
+        }
+
+        histogramContainer: HistogramContainer {
+            @display("p=416,659");
+        }
+        device1: TsnDevice {
+            @display("p=319,240");
+        }
+        detCom: DetCom { // DetCom module (deterministic communication).
+            @display("p=422,240");
+        }
+        bridge1: TsnSwitch { // A DetCom Adapter.
+            @display("p=526,239");
+        }
+        bridge2: TsnSwitch { // A TSN switch with a bridge function.
+            @display("p=709,239");
+        }
+        bridge3: TsnSwitch { // A TSN switch with a bridge function.
+            @display("p=625,398");
+        }
+        device2: TsnDevice { // A TSN device acting as a talker (data sender).
+            @display("p=815,240");
+        }
+    connections:
+        device1.ethg++ <--> EthernetLink <--> detCom.dsttg++;
+        detCom.nwttg <--> EthernetLink <--> bridge1.ethg++;
+        bridge1.ethg++ <--> EthernetLink <--> bridge2.ethg++;
+        bridge2.ethg++ <--> EthernetLink <--> device2.ethg++;
+        bridge1.ethg++ <--> EthernetLink <--> bridge3.ethg++;
+        bridge3.ethg++ <--> EthernetLink <--> bridge2.ethg++;
+
+        device1.ethg++ <--> EthernetLink <--> tsnController.userInterface;
+        device2.ethg++ <--> EthernetLink <--> tsnController.userInterface;
+
+        bridge1.ethg++ <--> controlplane <--> tsnController.networkInterface;
+        bridge2.ethg++ <--> controlplane <--> tsnController.networkInterface;
+        bridge3.ethg++ <--> controlplane <--> tsnController.networkInterface;
+
+
+}

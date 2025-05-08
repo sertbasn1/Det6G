@@ -1,0 +1,37 @@
+/*
+ * CentralUserConfig.cc
+ *
+ *  Created on: May 5, 2025
+ *      Author: root
+ */
+
+#include <omnetpp.h>
+using namespace omnetpp;
+namespace inet{
+
+class CentralUserConfig : public cSimpleModule
+{
+protected:
+    virtual void initialize();
+    virtual void handleMessage(cMessage *msg) override;
+};
+
+
+Define_Module(CentralUserConfig);
+
+void CentralUserConfig::initialize()
+{
+    EV << "Hello World!\n";
+}
+
+virtual void CentralUserConfig::handleMessage(cMessage *msg)
+{
+
+    std::cout << "Here the "<< this->getFullName() << " received " << msg->getKind()<< endl;
+
+}
+
+
+}
+
+

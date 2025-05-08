@@ -1,0 +1,87 @@
+/*
+ * SimpleUdpSourceApp.cc
+ *
+ *  Created on: Apr 22, 2025
+ *      Author: root
+ */
+
+
+#include "inet/applications/udpapp/SimpleUdpSourceApp.h"
+
+#include "inet/common/ModuleAccess.h"
+#include "inet/common/packet/Packet.h"
+#include "inet/networklayer/common/L3AddressResolver.h"
+#include "inet/transportlayer/contract/udp/UdpControlInfo_m.h"
+
+#define MSGKIND_SEND_TA                 9
+namespace inet {
+
+using namespace std;
+//Define_Module(SimpleUdpSourceApp);
+
+SimpleUdpSourceApp::~SimpleUdpSourceApp()
+{
+
+}
+
+
+void SimpleUdpSourceApp::initialize(int stage)
+{
+    ApplicationBase::initialize(stage);
+    std::cout << "-----> SimpleUdpSourceApp initialized at " << this->getFullName() << endl;
+
+    if (stage == INITSTAGE_LOCAL) {
+        cMessage *event = new cMessage("TA msg");
+        event->setKind(MSGKIND_SEND_TA);
+        double start=this->par( "initialProductionOffset" );
+        std::cout << "-----> START time is " << start << endl;
+
+        scheduleAt(start, event);
+    }
+}
+
+
+void SimpleUdpSourceApp::handleMessageWhenUp(cMessage *msg)
+{
+    if (msg->isSelfMessage()) {
+        if (msg->getKind()== MSGKIND_SEND_TA){
+                sendStreamRequestMessage();
+                std::cout <<  this->getFullPath() << simTime() << "TA generation triggered" << endl;
+                delete msg;
+                return;
+        }
+    }
+}
+
+void SimpleUdpSourceApp::sendStreamRequestMessage()
+{
+//    for (std::list<BGBuffer*>::const_iterator buf = bgbuffers.begin(); buf != bgbuffers.end(); ++buf)
+//    {
+//        EthernetIIFrameWithQTag *frame = new EthernetIIFrameWithQTag("TA");
+//        frame->setDest(this->destAddress);
+//        cPacket *payload_packet = new cPacket();
+//        payload_packet->setByteLength(static_cast<int64_t>(getPayloadBytes()));
+//        frame->encapsulate(payload_packet);
+//        frame->setPcp(priority);
+//        frame->setVID(this->vid);
+//        frame->setSchedulingPriority(static_cast<short>(SCHEDULING_PRIORITY_OFFSET_8021Q - priority));
+//        //Padding
+//        if (frame->getByteLength() < MIN_ETHERNET_FRAME_BYTES)
+//        {
+//            frame->setByteLength(MIN_ETHERNET_FRAME_BYTES);
+//        }
+//
+//        //cout<<"Host: Talker register at "<<simTime()<<endl;
+//        frame->setDisplayString("TA");
+//        sendDirect(frame, (*buf)->gate("in"));
+//    }
+
+}
+
+
+} // namespace inet
+
+
+
+
+

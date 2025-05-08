@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=/simulations/omnetpp-6.0.1/bin/opp_ide
+Icon=/simulations/omnetpp-6.0.1/images/logo/logo128.png
+Name=OMNeT++ 6.0.1 IDE
+Categories=Development
+

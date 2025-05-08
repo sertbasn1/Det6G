@@ -1,0 +1,28 @@
+/*
+ * CentralUserConfig.cc
+ *
+ *  Created on: May 5, 2025
+ *      Author: root
+ */
+
+#include <omnetpp.h>
+using namespace omnetpp;
+
+class CentralUserConfig : public cSimpleModule
+{
+  protected:
+    virtual void initialize();
+};
+
+namespace inet{
+    Define_Module(CentralUserConfig);
+
+
+    void CentralUserConfig::initialize()
+    {
+        EV << "Hello World!\n";
+    }
+
+}
+
+

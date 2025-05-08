@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=/bin/bash --rcfile /simulations/omnetpp-6.0.1/setenv
+Terminal=true
+Icon=/simulations/omnetpp-6.0.1/images/logo/logo128s.png
+Name=OMNeT++ 6.0.1 Shell
+Categories=Development
+
