@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;inet/src/inet/applications/udpapp/streamRequest.h&apos; to &apos;StreamRequest.h&apos;" description="Rename resource &apos;streamRequest.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/inet/applications/udpapp/streamRequest.h" name="StreamRequest.h" stamp="1746563085508" updateReferences="true"/>
-</session>

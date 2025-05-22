@@ -1,5 +1,0 @@
-Link Type,Utilization (%),Blocked (%),Utilizable Free (>= 100) (%),Non-Utilizable Free (< 100) (%)
-ED->SW,2.93,0.00,97.08,0.00
-SW->ED,1.46,0.00,98.21,0.33
-SW->SW,2.71,0.00,96.86,0.43
-Overall,2.33,0.00,97.35,0.33

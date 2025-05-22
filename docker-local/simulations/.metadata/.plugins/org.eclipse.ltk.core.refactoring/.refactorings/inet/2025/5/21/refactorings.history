@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;inet/src/inet/configurator&apos; to &apos;centralconfigurator&apos;" description="Rename resource &apos;configurator&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/inet/configurator" name="centralconfigurator" stamp="1747773111319" updateReferences="true"/>
-</session>

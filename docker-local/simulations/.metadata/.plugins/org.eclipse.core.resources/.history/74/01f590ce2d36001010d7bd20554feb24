@@ -1,2 +1,0 @@
-iteration,batch,status,duration_seconds,streams_in_batch,streams_scheduled,success_rate
-1,"[1, 0]",Optimal,0.6658511161804199,2,2,1.0

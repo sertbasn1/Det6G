@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;6GDetCom_Simulator/simulations/simpleTsn/Baseline.ned&apos; to &apos;simpleTsn.ned&apos;" description="Rename resource &apos;Baseline.ned&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="simulations/simpleTsn/Baseline.ned" name="simpleTsn.ned" stamp="1745347267165" updateReferences="true"/>
-</session>

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;inet/src/inet/configurator/Demand.h&apos; to &apos;StreamRegistrationRequest.h&apos;" description="Rename resource &apos;Demand.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/inet/configurator/Demand.h" name="StreamRegistrationRequest.h" stamp="1747208485631" updateReferences="true"/>
-</session>

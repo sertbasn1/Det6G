@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;6GDetCom_Simulator/simulations/simpleTsn/givenMacTable.txt&apos; to &apos;givenMacTable1.txt&apos;" description="Rename resource &apos;givenMacTable.txt&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="simulations/simpleTsn/givenMacTable.txt" name="givenMacTable1.txt" stamp="1745868803301" updateReferences="true"/>
-</session>
