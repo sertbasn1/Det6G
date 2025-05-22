@@ -1,0 +1,113 @@
+[General]
+sim-time-limit = 4s
+description = "General configuration"
+network = simpleTsn
+
+**.displayGateSchedules = false
+#**.gateFilter = "**.eth[1].**"
+**.gateScheduleVisualizer.height = 14
+**.gateScheduleVisualizer.placementHint = "bottom"
+*.scenarioManager.script = xmldoc("scenario.xml")
+
+*.histogramContainer.histograms = {Uplink: "../../../deterministic6g_data/PD-Wireless-5G-1/s1-UL_wall.xml", Downlink: "../../../deterministic6g_data/PD-Wireless-5G-1/s10-DL_wall.xml"}
+*.detCom.delayConfig = xmldoc("delays_example.xml")
+
+# client applications
+*.device1.numApps = 3
+*.device1.app[0].typename = "SimpleUdpSourceApp"
+*.device1.app[0].display-name = "stream1"
+*.device1.app[0].streamId = "1"
+*.device1.app[0].max_latency = 100.0
+*.device1.app[0].priority = 0
+*.device1.app[0].gamma = 0
+*.device1.app[0].max_jitter = 10
+*.device1.app[0].io.destAddress = "device2"
+*.device1.app[0].io.destPort = 1001
+*.device1.app[0].source.packetLength = 1000B - 54B # 54B = 8B (UDP) + 20B (IP) + 14B (ETH MAC) + 4B (ETH FCS) + 8B (ETH PHY)
+*.device1.app[0].source.productionInterval = 200ms
+*.device1.app[0].source.initialProductionOffset=1s
+
+*.device1.app[1].typename = "SimpleUdpSinkApp"
+*.device1.app[1].io.localPort = 1002
+
+*.device1.app[2].typename = "SimpleUdpSourceApp"
+*.device1.app[2].display-name = "stream3"
+*.device1.app[2].streamId = "3"
+*.device1.app[2].max_latency = 100.0
+*.device1.app[2].priority = 0
+*.device1.app[2].gamma = 0
+*.device1.app[2].max_jitter = 10
+*.device1.app[2].io.destAddress = "device2"
+*.device1.app[2].io.destPort = 1003
+*.device1.app[2].source.packetLength = 1000B - 54B # 54B = 8B (UDP) + 20B (IP) + 14B (ETH MAC) + 4B (ETH FCS) + 8B (ETH PHY)
+*.device1.app[2].source.productionInterval = 50ms
+*.device1.app[2].source.initialProductionOffset=20s
+
+# server applications
+*.device2.numApps = 3
+*.device2.app[0].typename = "SimpleUdpSinkApp"
+*.device2.app[0].io.localPort = 1001
+
+*.device2.app[1].typename = "SimpleUdpSourceApp"
+*.device2.app[1].display-name = "stream2"
+*.device2.app[1].streamId = "2"
+*.device2.app[1].max_latency = 100.0
+*.device2.app[1].priority = 0
+*.device2.app[1].gamma = 0
+*.device2.app[1].max_jitter = 10
+*.device2.app[1].io.destAddress = "device1"
+*.device2.app[1].io.destPort = 1002
+*.device2.app[1].source.packetLength = 1000B - 54B # 54B = 8B (UDP) + 20B (IP) + 14B (ETH MAC) + 4B (ETH FCS) + 8B (ETH PHY)
+*.device2.app[1].source.productionInterval = 100ms
+*.device2.app[1].source.initialProductionOffset=30s
+
+*.device2.app[2].typename = "SimpleUdpSinkApp"
+*.device2.app[2].io.localPort = 1003
+
+#To activate the SRP like stream regitration process
+*.device1.app[0].source.streamingEnabled = false
+*.device1.app[2].source.streamingEnabled = false
+*.device2.app[1].source.streamingEnabled = false
+
+#Stream mapping
+**.streamIdentifier.identifier.mapping = [{stream: "stream1", packetFilter: expr(udp.destPort == 1001)}, 
+										  {stream: "stream2", packetFilter: expr(udp.destPort == 1002)},
+										  {stream: "stream3", packetFilter: expr(udp.destPort == 1003)}]
+**.streamCoder.*.mapping = [{stream: "stream1", pcp: 4, vlan: 1},
+							{stream: "stream2", pcp: 4, vlan: 5},
+							{stream: "stream3", pcp: 4, vlan: 5}]
+
+
+# disable forwarding IEEE 802.1Q C-Tag
+*.bridge*.bridging.directionReverser.reverser.excludeEncapsulationProtocols = ["ieee8021qctag"]
+ 
+# allow ingress traffic from VLAN 1
+*.bridge*.ieee8021q.qTagHeaderChecker.vlanIdFilter = [1,5]
+
+# traffic shaping base config
+*.bridge*.eth[*].macLayer.queue.*[0].display-name = "best effort"
+*.bridge*.eth[*].macLayer.queue.*[1].display-name = "video"
+*.bridge*.eth[*].macLayer.queue.*[2].display-name = "control"
+*.bridge*.eth[*].macLayer.queue.*[3].display-name = "p3"
+*.bridge*.eth[*].macLayer.queue.*[4].display-name = "p4"
+*.bridge*.eth[*].macLayer.queue.*[5].display-name = "p5"
+*.bridge*.eth[*].macLayer.queue.*[6].display-name = "p6"
+*.bridge*.eth[*].macLayer.queue.*[7].display-name = "p7"
+ 
+
+## disable automatic MAC forwarding table configuration
+*.macForwardingTableConfigurator.typename = ""
+**.bridge1.macTable.forwardingTable = [{address: "device2", vlan: 1, interface: "eth2"},{address: "device1", vlan: 5, interface: "eth0"},{address: "device2", vlan: 5, interface: "eth1"}]
+**.bridge2.macTable.forwardingTable = [{address: "device2", vlan: 1, interface: "eth1"},{address: "device1", vlan: 5, interface: "eth0"},{address: "device2", vlan: 5, interface: "eth1"}]
+**.bridge3.macTable.forwardingTable = [{address: "device2", vlan: 1, interface: "eth1"}]
+
+#GCL
+#**.bridge1.eth[2].macLayer.queue.transmissionGate[4].initiallyOpen = false
+#**.bridge1.eth[2].macLayer.queue.transmissionGate[4].offset = 819.95us
+#**.bridge1.eth[2].macLayer.queue.transmissionGate[4].durations = [161us,839us]
+
+
+*.gateScheduleConfigurator.typename = "EagerGateScheduleConfigurator"
+*.gateScheduleConfigurator.gateCycleDuration = 1ms
+# 58B = 8B (UDP) + 20B (IP) + 4B (802.1 Q-TAG) + 14B (ETH MAC) + 4B (ETH FCS) + 8B (ETH PHY)
+#*.gateScheduleConfigurator.configuration =

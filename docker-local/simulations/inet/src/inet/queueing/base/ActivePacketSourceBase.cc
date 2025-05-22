@@ -6,7 +6,6 @@
 
 
 #include "inet/queueing/base/ActivePacketSourceBase.h"
-
 #include "inet/common/ModuleAccess.h"
 
 namespace inet {
@@ -22,7 +21,6 @@ void ActivePacketSourceBase::initialize(int stage)
     else if (stage == INITSTAGE_QUEUEING)
         checkPacketOperationSupport(outputGate);
 }
-
 } // namespace queueing
 } // namespace inet
 

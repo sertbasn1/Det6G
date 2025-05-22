@@ -1,0 +1,16 @@
+Optimization Timing Summary
+==========================
+
+Start time: 2025-05-21 10:22:40
+End time: 2025-05-21 10:22:41
+Total duration: 0.67 seconds
+
+Iterations: 1
+Average iteration time: 0.67 seconds
+Total streams scheduled: 2 out of 2 attempted
+Overall success rate: 1.00
+Scheduling efficiency: 2.00 streams per iteration
+Processing speed: 3.00 streams per second
+
+Iteration Details:
+  Iteration 1: 0.67s - Scheduled 2/2 streams - Status: Optimal

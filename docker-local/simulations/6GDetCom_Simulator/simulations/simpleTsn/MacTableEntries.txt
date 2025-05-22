@@ -1,13 +1,18 @@
 VLAN ID    MAC    IfId    Inserted
->>simpleTsn.detCom.nwtt.macTable
->>simpleTsn.detCom.dstt[0].macTable
 >>simpleTsn.bridge1.macTable
-1 0A-AA-00-00-00-0E 102 -1
-5 0A-AA-00-00-00-01 100 -1
-5 0A-AA-00-00-00-0E 101 -1
+1 0A-AA-00-00-00-09 100 3.00574
+1 0A-AA-00-00-00-0A 102 -1
+5 0A-AA-00-00-00-09 100 -1
+5 0A-AA-00-00-00-0A 101 -1
 >>simpleTsn.bridge2.macTable
-1 0A-AA-00-00-00-0E 101 -1
-5 0A-AA-00-00-00-01 100 -1
-5 0A-AA-00-00-00-0E 101 -1
+1 0A-AA-00-00-00-09 102 3.00576
+1 0A-AA-00-00-00-0A 101 -1
+5 0A-AA-00-00-00-09 100 -1
+5 0A-AA-00-00-00-0A 101 -1
 >>simpleTsn.bridge3.macTable
-1 0A-AA-00-00-00-0E 101 -1
+1 0A-AA-00-00-00-09 100 3.00575
+1 0A-AA-00-00-00-0A 101 -1
+>>simpleTsn.detCom.nwtt.macTable
+1 0A-AA-00-00-00-09 101 3.00573
+>>simpleTsn.detCom.dstt[0].macTable
+1 0A-AA-00-00-00-09 100 3.00001

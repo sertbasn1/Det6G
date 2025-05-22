@@ -1,0 +1,3 @@
+timestamp,total_gb,used_gb,available_gb,percent_used,source,python_rss_gb,python_vms_gb,python_percent
+0.04,7.653,0.939,6.715,12.3,free,0.202,2.171,2.6
+5.08,7.653,1.218,6.435,15.9,free,0.51,2.916,6.7

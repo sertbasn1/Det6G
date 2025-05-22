@@ -21,5 +21,10 @@ package inet.applications.udpapp;
 module SimpleUdpSourceApp extends UdpApp
 {
     parameters:
-        sink.typename = "";
+        sink.typename = "";  
+        string streamId = default("");
+        double max_latency;
+        int priority = default(0);
+        double gamma;
+        double max_jitter;
 }

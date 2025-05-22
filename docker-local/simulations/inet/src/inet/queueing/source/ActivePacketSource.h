@@ -44,7 +44,7 @@ class INET_API ActivePacketSource : public ClockUserModuleMixin<ActivePacketSour
     virtual void handleCanPushPacketChanged(cGate *gate) override;
     virtual void handlePushPacketProcessed(Packet *packet, cGate *gate, bool successful) override;
 
-    void  sendStreamRequestMessage();
+    void  sendStreamRegistrationRequestMessage();
 
 };
 

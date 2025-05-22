@@ -1,0 +1,22 @@
+/*
+ * wTSNGateScheduleConfigurator.h
+ *
+ *  Created on: May 20, 2025
+ *      Author: root
+ */
+
+#ifndef INET_LINKLAYER_CONFIGURATOR_GATESCHEDULING_COMMON_WTSNGATESCHEDULECONFIGURATOR_H_
+#define INET_LINKLAYER_CONFIGURATOR_GATESCHEDULING_COMMON_WTSNGATESCHEDULECONFIGURATOR_H_
+
+
+#include "inet/linklayer/configurator/gatescheduling/base/GateScheduleConfiguratorBase.h"
+
+namespace inet {
+
+class INET_API wTSNGateScheduleConfigurator : public GateScheduleConfiguratorBase
+{
+};
+
+
+
+#endif /* INET_LINKLAYER_CONFIGURATOR_GATESCHEDULING_COMMON_WTSNGATESCHEDULECONFIGURATOR_H_ */

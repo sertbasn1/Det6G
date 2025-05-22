@@ -8,7 +8,7 @@
 #include "inet/queueing/gate/PeriodicGate.h"
 
 #include "inet/common/ModuleAccess.h"
-
+using namespace std;
 namespace inet {
 namespace queueing {
 

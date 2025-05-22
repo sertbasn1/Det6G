@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="TemplateBasedWizard">
-		<item key="nedfile.template" value="bundleentry://441.fwk2008552663/templates/emptynedfile/"/>
+		<item key="nedfile.template" value="bundleentry://441.fwk170094210/templates/emptynedfile/"/>
 		<item key="msgfile.template" value="bundleentry://439.fwk226098865/templates/msgfile/"/>
 	</section>
 </section>

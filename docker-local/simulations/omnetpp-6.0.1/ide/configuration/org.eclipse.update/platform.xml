@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config date="1744190189839" transient="false" version="3.0">
+<config date="1746733118840" transient="false" version="3.0">
 <site enabled="true" policy="USER-EXCLUDE" updateable="true" url="platform:/base/">
 <feature id="org.eclipse.cdt" url="features/org.eclipse.cdt_10.6.2.202205170638/" version="10.6.2.202205170638">
 </feature>

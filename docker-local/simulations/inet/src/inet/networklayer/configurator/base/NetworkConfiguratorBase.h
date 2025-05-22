@@ -67,16 +67,16 @@ class INET_API NetworkConfiguratorBase : public cSimpleModule
     Topology *topology = nullptr;
 
   protected:
-    virtual ~NetworkConfiguratorBase() { delete topology; }
-    virtual int numInitStages() const override { return NUM_INIT_STAGES; }
-    virtual void handleMessage(cMessage *msg) override { throw cRuntimeError("Invalid operation"); }
-
     /**
      * Extracts network topology by walking through the module hierarchy.
      * Creates nodes from modules having @networkNode property.
      * Creates links from connections (wired and wireless) between network interfaces.
      */
     virtual void extractTopology(Topology& topology);
+
+    virtual ~NetworkConfiguratorBase() { delete topology; }
+    virtual int numInitStages() const override { return NUM_INIT_STAGES; }
+    virtual void handleMessage(cMessage *msg) override { throw cRuntimeError("Invalid operation"); }
 
     virtual std::vector<Node *> computeShortestNodePath(Node *source, Node *destination) const;
     virtual std::vector<Link *> computeShortestLinkPath(Node *source, Node *destination) const;
@@ -89,6 +89,7 @@ class INET_API NetworkConfiguratorBase : public cSimpleModule
     virtual Link *findLinkOut(const Interface *interface) const;
     virtual Topology::Link *findLinkOut(const Node *node, int gateId) const;
     virtual Interface *findInterface(const Node *node, NetworkInterface *networkInterface) const;
+
 };
 
 } // namespace inet

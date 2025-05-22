@@ -1,0 +1,44 @@
+
+Gurobi 12.0.1 (linux64) logging started Wed May 21 10:22:41 2025
+
+Set parameter LogFile to value "/simulations/optimization/opt_ext/data/output/run_20250521_102240_90a06193/solver_files/solver_log_iteration_1.log"
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (linux64 - "Debian GNU/Linux 12 (bookworm)")
+
+CPU model: unknown, instruction set [SSE2]
+Thread count: 10 physical cores, 10 logical processors, using up to 10 threads
+
+Non-default parameters:
+TimeLimit  100
+
+Academic license 2662249 - for non-commercial use only - registered to nu___@uni-hamburg.de
+Optimize a model with 333 rows, 143 columns and 1059 nonzeros
+Model fingerprint: 0xf977c63e
+Variable types: 0 continuous, 143 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+07]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [5e+02, 1e+07]
+Found heuristic solution: objective -0.0000000
+Presolve removed 88 rows and 62 columns
+Presolve time: 0.06s
+Presolved: 245 rows, 81 columns, 839 nonzeros
+Variable types: 0 continuous, 81 integer (60 binary)
+
+Root relaxation: objective 2.000000e+00, 23 iterations, 0.03 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    2.00000    0    2   -0.00000    2.00000      -     -    0s
+H    0     0                       1.0000000    2.00000   100%     -    0s
+H    0     0                       2.0000000    2.00000  0.00%     -    0s
+     0     0    2.00000    0    2    2.00000    2.00000  0.00%     -    0s
+
+Explored 1 nodes (23 simplex iterations) in 0.22 seconds (0.00 work units)
+Thread count was 10 (of 10 available processors)
+
+Solution count 3: 2 1 -0 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.000000000000e+00, best bound 2.000000000000e+00, gap 0.0000%

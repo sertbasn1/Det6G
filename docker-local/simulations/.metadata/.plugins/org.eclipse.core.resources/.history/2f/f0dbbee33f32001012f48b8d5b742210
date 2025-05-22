@@ -1,0 +1,40 @@
+/*
+ * CentralNetworkConfig.h
+ *
+ *  Created on: May 7, 2025
+ *      Author: root
+ */
+
+#ifndef INET_CONFIGURATOR_CENTRALNETWORKCONFIG_H_
+#define INET_CONFIGURATOR_CENTRALNETWORKCONFIG_H_
+#include <omnetpp.h>
+#include "inet/queueing/source/ActivePacketSource.h"
+#include "inet/networklayer/configurator/base/NetworkConfiguratorBase.h"
+#include "inet/networklayer/common/InterfaceTable.h"
+#include "inet/networklayer/common/L3AddressResolver.h"
+#include "inet/common/ModuleAccess.h"
+#include "inet/networklayer/ipv4/IIpv4RoutingTable.h"
+
+#include "StreamRegistrationRequest.h"
+#include "StreamRegistrationResponse.h"
+using namespace omnetpp;
+using namespace std;
+
+namespace inet{
+
+class CentralNetworkConfig : public cSimpleModule, public NetworkConfiguratorBase
+{
+    public:
+        int registerStream(StreamRegistrationRequest *);
+        void configureGate(cModule *gate,  bool initiallyOpen, simtime_t offset, vector<simtime_t> times);
+        Topology& _topology;
+
+
+    protected:
+        virtual void initialize() override;
+
+};
+}
+
+
+#endif /* INET_CONFIGURATOR_CENTRALNETWORKCONFIG_H_ */

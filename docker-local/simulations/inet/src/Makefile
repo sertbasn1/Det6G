@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for $(LIB_PREFIX)INET
 #
 # This file was generated with the command:
-#  opp_makemake --make-so -f --deep -o INET -O out -pINET -I. -Xinet/applications/voipstream -Xinet/common/selfdoc -Xinet/emulation -Xinet/linklayer/configurator/gatescheduling/z3 -Xinet/transportlayer/tcp_lwip -Xinet/visualizer/osg
+#  opp_makemake --make-so -f --deep -o INET -O out -pINET -I/usr/include/python3.11 -I. -L/usr/include/python3.11 -lpython3.11 -lstdc++ -Xinet/applications/voipstream -Xinet/common/selfdoc -Xinet/emulation -Xinet/linklayer/configurator/gatescheduling/z3 -Xinet/transportlayer/tcp_lwip -Xinet/visualizer/osg
 #
 
 # Name of target to be created (-o option)
@@ -14,13 +14,13 @@ TARGET_IMPDEF = $(TARGET_NAME)$(IMPDEF_SUFFIX)
 TARGET_FILES = $(TARGET_DIR)/$(TARGET)
 
 # C++ include paths (with -I)
-INCLUDE_PATH = -I.
+INCLUDE_PATH = -I/usr/include/python3.11 -I.
 
 # Additional object and library files to link with
 EXTRA_OBJS =
 
 # Additional libraries (-L, -l options)
-LIBS =
+LIBS = $(LDFLAG_LIBPATH)/usr/include/python3.11  -lpython3.11 -lstdc++
 
 # Output directory
 PROJECT_OUTPUT_DIR = ../out
@@ -78,6 +78,9 @@ OBJS = \
     $O/inet/applications/udpapp/UdpVideoStreamServer.o \
     $O/inet/applications/voip/SimpleVoipReceiver.o \
     $O/inet/applications/voip/SimpleVoipSender.o \
+    $O/inet/centralconfigurator/CentralNetworkConfig.o \
+    $O/inet/centralconfigurator/CentralUserConfig.o \
+    $O/inet/centralconfigurator/TsnController.o \
     $O/inet/clock/base/ClockBase.o \
     $O/inet/clock/base/DriftingOscillatorBase.o \
     $O/inet/clock/base/OscillatorBase.o \
@@ -238,9 +241,6 @@ OBJS = \
     $O/inet/common/socket/SocketBase.o \
     $O/inet/common/socket/SocketMap.o \
     $O/inet/common/streetmap/OpenStreetMap.o \
-    $O/inet/configurator/CentralNetworkConfig.o \
-    $O/inet/configurator/CentralUserConfig.o \
-    $O/inet/configurator/TsnController.o \
     $O/inet/environment/common/Material.o \
     $O/inet/environment/common/MaterialRegistry.o \
     $O/inet/environment/common/PhysicalEnvironment.o \
@@ -276,6 +276,7 @@ OBJS = \
     $O/inet/linklayer/configurator/gatescheduling/common/AlwaysOpenGateScheduleConfigurator.o \
     $O/inet/linklayer/configurator/gatescheduling/common/EagerGateScheduleConfigurator.o \
     $O/inet/linklayer/configurator/gatescheduling/common/TSNschedGateScheduleConfigurator.o \
+    $O/inet/linklayer/configurator/gatescheduling/common/wTSNGateScheduleConfigurator.o \
     $O/inet/linklayer/csmaca/CsmaCaMac.o \
     $O/inet/linklayer/csmaca/CsmaCaMacHeaderSerializer.o \
     $O/inet/linklayer/csmaca/CsmaCaMacProtocolDissector.o \
@@ -1802,6 +1803,9 @@ include $(CONFIGFILE)
 
 # Simulation kernel and user interface libraries
 OMNETPP_LIBS = -loppenvir$D $(KERNEL_LIBS) $(SYS_LIBS)
+ifneq ($(PLATFORM),win32)
+LIBS += -Wl,-rpath,$(abspath /usr/include/python3.11)
+endif
 
 COPTS = $(CFLAGS) $(IMPORT_DEFINES) -DINET_EXPORT $(INCLUDE_PATH) -I$(OMNETPP_INCL_DIR)
 MSGCOPTS = $(INCLUDE_PATH) -PINET_API

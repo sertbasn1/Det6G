@@ -7,6 +7,7 @@
 
 #include "inet/queueing/source/ActivePacketSource.h"
 
+#include "../../centralconfigurator/StreamRegistrationRequest.h"
 using namespace std;
 #include <string>
 namespace inet {
@@ -26,10 +27,8 @@ void ActivePacketSource::initialize(int stage)
 
         if(streamingEnabled==false){\
             //SRP like stream registration will be triggered
-            std::cout << "-----> ActivePacketSource initialized at " << (this->getParentModule())->getParentModule()->getFullName() << endl;
             cMessage *event = new cMessage("TA msg");
             event->setKind(MSGKIND_SEND_TA);
-            std::cout << "-----> START time is " << initialProductionOffset << endl;
             scheduleAt(initialProductionOffset.asSimTime(), event);
         }
 
@@ -44,9 +43,27 @@ void ActivePacketSource::initialize(int stage)
 void ActivePacketSource::handleMessage(cMessage *message)
 {
 
+    if (message->isPacket() && message->arrivedOn("fromCuc")) {
+        cPacket *packet = check_and_cast<cPacket *>(message);
+         string  sid = packet->par("sid").str();
+         bool status = packet->par("status").boolValue() ;
+         double offset = message->par("offset");
+
+         cout<<"==========> "<< this->getFullPath()<<" received message from CUC for stream "<< sid<<" as "<<status<<" with offset"<<offset<<endl;
+
+         if (status==true){
+             streamingEnabled = true;
+             //todo: set a timer here to schedule setting streamingEnabled as true for the next transmission
+             scheduleProductionTimerAndProducePacket();
+         }
+
+         delete message;
+         return;
+        }
     if (message->getKind()== MSGKIND_SEND_TA){
-        sendStreamRequestMessage();
-        std::cout <<  this->getFullPath() << simTime() << "TA generation triggered" << endl;
+        sendStreamRegistrationRequestMessage();
+        cout<<"==========> "<< this->getFullPath() <<" sends TA to CUC "<<endl;
+
         delete message;
         return;
     }
@@ -95,6 +112,9 @@ void ActivePacketSource::producePacket()
 {
     auto packet = createPacket();
     EV_INFO << "Producing packet" << EV_FIELD(packet) << EV_ENDL;
+
+    cout << this->getFullName() <<": Producing packet" << endl;
+
     emit(packetPushedSignal, packet);
     pushOrSendPacket(packet, outputGate, consumer);
     updateDisplayString();
@@ -113,40 +133,42 @@ void ActivePacketSource::handlePushPacketProcessed(Packet *packet, cGate *gate, 
 }
 
 
-void ActivePacketSource::sendStreamRequestMessage()
+void ActivePacketSource::sendStreamRegistrationRequestMessage()
 {
-    auto packet = createPacket();
+    cPacket *packet = new cPacket("StreamRegistrationRequest");
     packet->setKind(MSGKIND_SEND_TA);
 
-    packet->addPar("sid"); //todo of cuc
-    packet->par("sid").setStringValue("-1");
+    string sid = this->getParentModule()->par("streamId").stringValue();
 
-    packet->addPar("talker");
-    packet->par("talker").setStringValue( this->getParentModule()->getParentModule()->getFullName());
+    std::string input = this->getFullPath();
+    std::vector<std::string> tokens;
+    std::stringstream ss(input);
+    std::string token;
 
-    packet->addPar("listener");
-    cModule* ioModule = this->getParentModule()->getSubmodule("io");
-    packet->par("listener").setStringValue(ioModule->par("destAddress"));
+    while (std::getline(ss, token, '.')) {
+        tokens.push_back(token);
+    }
+    string talker_str = tokens[1];
+    string listener_str = (this->getParentModule())->getSubmodule("io")->par("destAddress").stdstringValue();
 
-    packet->addPar("service_type");
-    packet->par("service_type").setStringValue("-1"); //todo of cuc
+    int talker_id=-1;
+    int listener_id=-1;
+    int packet_size = par("packetLength");
+    int priority = this->getParentModule()->par("priority").intValue();
+    float period = par("productionInterval").doubleValue();
+    float max_jitter = this->getParentModule()->par("max_jitter").doubleValue();
+    float max_latency = this->getParentModule()->par("max_latency").doubleValue();
+    float gamma = this->getParentModule()->par("gamma").doubleValue();
 
-    double max_pac_size = 1.0 *  par("packetLength").intValue()*8; //bit
-    double period_s = par("productionInterval").doubleValue(); //sec
-    double max_data = max_pac_size/period_s;
-    packet->addPar("max_data");
-    packet->par("max_data").setDoubleValue(max_data);
 
-    packet->addPar("max_latency");
-    packet->par("max_latency").setDoubleValue(100.0);
+    StreamRegistrationRequest *data = new StreamRegistrationRequest(sid, talker_str, listener_str, talker_id, listener_id,
+            packet_size, priority, period, max_jitter, max_latency, gamma);
+    packet->addObject(data);
 
     cModule * base = ((this->getParentModule())->getParentModule())->getParentModule();
     cModule * targetModule = (base->getSubmodule("tsnController"))->getSubmodule("cuc");
     cGate *targetGate = targetModule->gate("userInterfaces$i");
     sendDirect(packet, targetGate);
-
-
-
 
 }
 

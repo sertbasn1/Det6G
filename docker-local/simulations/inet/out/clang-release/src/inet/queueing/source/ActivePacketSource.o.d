@@ -36,7 +36,8 @@
   inet/common/packet/tag/SharingTagSet.h \
   inet/queueing/contract/IPacketProcessor.h \
   inet/queueing/contract/IPassivePacketSink.h \
-  inet/queueing/contract/IActivePacketSource.h
+  inet/queueing/contract/IActivePacketSource.h \
+  inet/queueing/source/../../centralconfigurator/StreamRegistrationRequest.h
 
 /simulations/inet/src/inet/common/precompiled.h:
 
@@ -153,3 +154,5 @@ inet/queueing/contract/IPacketProcessor.h:
 inet/queueing/contract/IPassivePacketSink.h:
 
 inet/queueing/contract/IActivePacketSource.h:
+
+inet/queueing/source/../../centralconfigurator/StreamRegistrationRequest.h:

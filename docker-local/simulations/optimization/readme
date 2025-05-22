@@ -1,0 +1,14 @@
+1 - BUILD DOCKER IMAGE 
+----
+docker build -t opt_ext:latest . 
+----
+
+2 - RUN DOCKER IMAGE WITH gurobi.lic path, replace "/home/okaynak/optimization/"
+----
+docker run -it \
+    -v /home/okaynak/optimization/gurobi.lic:/opt/gurobi/gurobi.lic \
+    opt_ext:latest \
+    bash
+----
+
+3- RUN script.py

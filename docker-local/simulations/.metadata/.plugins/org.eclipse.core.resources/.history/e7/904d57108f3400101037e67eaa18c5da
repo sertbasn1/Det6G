@@ -1,0 +1,64 @@
+/*
+ * StreamRegistrationRequest.h
+ *
+ *  Created on: May 7, 2025
+ *      Author: root
+ */
+
+#ifndef INET_CONFIGURATOR_STREAMREGISTRATIONREQUEST_H_
+#define INET_CONFIGURATOR_STREAMREGISTRATIONREQUEST_H_
+
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <map>
+#include <iterator>     // std::advance
+#include <sstream>
+#include <iostream>
+
+using namespace omnetpp;
+
+
+class StreamRegistrationRequest : public cObject {
+public:
+    string sid;
+
+    int talker;
+    int listener;
+
+    int packetSize;
+    int priority; // 0-7 service priority class
+    float period ;
+    float max_jitter;
+    float max_latency; // maximum tolerable latency
+    float gamma ;
+
+    StreamRegistrationRequest() {sid = ""; talker = 0; listener = 0; packetSize=0; priority = 0; period=0.0; max_jitter = 0.0; max_latency = 0.0; gamma=0.0; }
+
+    StreamRegistrationRequest(string st, int t, int l, int ps, int s, float p, float d, float lt, float g) { sid = st; talker = t; listener = l; packetSize = ps; priority = s; period = p; max_jitter = d; max_latency = lt; gamma = g;}
+
+    StreamRegistrationRequest& operator=(const StreamRegistrationRequest& d) { sid = d.sid; talker = d.talker; listener = d.listener;  packetSize=d.packetSize; priority = d.priority; period = d.period; max_jitter = d.max_jitter; max_latency = d.max_latency; gamma = d.gamma; return *this;}
+
+    StreamRegistrationRequest(const StreamRegistrationRequest &d) { sid = d.sid; talker = d.talker; listener = d.listener; packetSize = d.packetSize; priority = d.priority; period = d.period; max_jitter = d.max_jitter; max_latency = d.max_latency;  gamma = d.gamma;}
+
+    virtual StreamRegistrationRequest *dup() const override {
+            return new StreamRegistrationRequest(*this);
+        }
+
+    void printRequest(StreamRegistrationRequest req){
+        cout<<"Stream "<<retrievedReq->sid<<
+                        " from "<<retrievedReq->talker<<" to "<<retrievedReq->listener<<
+                        "\t packet_size: "<< retrievedReq->packetSize<<
+                        "\t priority: "<< retrievedReq->priority<<
+                        "\t period: "<< retrievedReq->period<<
+                        "\t max_jitter: "<< retrievedReq->max_jitter<<
+                        "\t max_latency: "<< retrievedReq->max_latency<<
+                        "\t gamma: "<< retrievedReq->gamma<<endl;
+
+    }
+};
+
+
+
+
+#endif /* INET_CONFIGURATOR_STREAMREGISTRATIONREQUEST_H_ */

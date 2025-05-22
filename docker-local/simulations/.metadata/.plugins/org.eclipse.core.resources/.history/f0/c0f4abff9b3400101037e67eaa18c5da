@@ -1,0 +1,46 @@
+/*
+ * CentralNetworkConfig.h
+ *
+ *  Created on: May 7, 2025
+ *      Author: root
+ */
+
+#ifndef INET_CONFIGURATOR_CENTRALNETWORKCONFIG_H_
+#define INET_CONFIGURATOR_CENTRALNETWORKCONFIG_H_
+#include <omnetpp.h>
+#include "inet/queueing/source/ActivePacketSource.h"
+#include "inet/networklayer/configurator/base/NetworkConfiguratorBase.h"
+#include "inet/networklayer/common/InterfaceTable.h"
+#include "inet/networklayer/common/L3AddressResolver.h"
+#include "inet/common/ModuleAccess.h"
+#include "inet/networklayer/ipv4/IIpv4RoutingTable.h"
+
+#include "StreamRegistrationRequest.h"
+#include "StreamRegistrationResponse.h"
+#include <map>
+
+using namespace omnetpp;
+using namespace std;
+
+namespace inet{
+
+class INET_API CentralNetworkConfig :  public NetworkConfiguratorBase
+{
+    public:
+        int registerStream(StreamRegistrationRequest *);
+        void configureGate(cModule *gate,  bool initiallyOpen, simtime_t offset, vector<simtime_t> times);
+
+
+    protected:
+        virtual void initialize() override;
+        void printTopology();
+        int getTopoIndex(int moduleid);
+        void printIndexMapping(); //topo index-moduleid mapping
+        std::map<int, int> topoIndices;
+
+
+};
+}
+
+
+#endif /* INET_CONFIGURATOR_CENTRALNETWORKCONFIG_H_ */

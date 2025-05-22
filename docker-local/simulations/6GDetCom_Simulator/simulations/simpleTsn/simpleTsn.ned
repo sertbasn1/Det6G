@@ -10,7 +10,7 @@ import inet.node.ethernet.EthernetLink;
 import inet.node.tsn.TsnDevice;
 import inet.node.tsn.TsnSwitch;
 import inet.common.scenario.ScenarioManager;
-import inet.configurator.TsnController;
+import inet.centralconfigurator.TsnController;
 import inet.node.ethernet.Eth100M;
 import inet.common.misc.ThruputMeteringChannel;
 
@@ -38,12 +38,7 @@ network simpleTsn extends DetComNetworkBase
         histogramContainer: HistogramContainer {
             @display("p=416,659");
         }
-        device1: TsnDevice {
-            @display("p=319,240");
-        }
-        detCom: DetCom { // DetCom module (deterministic communication).
-            @display("p=422,240");
-        }
+        
         bridge1: TsnSwitch { // A DetCom Adapter.
             @display("p=526,239");
         }
@@ -53,8 +48,14 @@ network simpleTsn extends DetComNetworkBase
         bridge3: TsnSwitch { // A TSN switch with a bridge function.
             @display("p=625,398");
         }
+        device1: TsnDevice {
+            @display("p=319,240");
+        }
         device2: TsnDevice { // A TSN device acting as a talker (data sender).
             @display("p=815,240");
+        }
+        detCom: DetCom { // DetCom module (deterministic communication).
+            @display("p=422,240");
         }
 
     connections:

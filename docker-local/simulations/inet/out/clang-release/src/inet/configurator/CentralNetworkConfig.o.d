@@ -38,7 +38,27 @@
   inet/queueing/contract/IPacketProcessor.h \
   inet/queueing/contract/IPassivePacketSink.h \
   inet/queueing/contract/IActivePacketSource.h \
-  inet/configurator/Demand.h
+  inet/networklayer/configurator/base/NetworkConfiguratorBase.h \
+  inet/common/Topology.h inet/networklayer/common/NetworkInterface.h \
+  inet/common/lifecycle/ILifecycle.h inet/common/packet/tag/TagSet.h \
+  inet/networklayer/common/L3Address.h \
+  inet/networklayer/common/ModuleIdAddress.h \
+  inet/networklayer/common/ModulePathAddress.h \
+  inet/networklayer/contract/clns/ClnsAddress.h \
+  inet/networklayer/contract/IInterfaceTable.h \
+  inet/networklayer/contract/IRoutingTable.h \
+  inet/networklayer/contract/IRoute.h \
+  inet/networklayer/common/InterfaceTable.h \
+  inet/common/lifecycle/ModuleOperations.h \
+  inet/common/lifecycle/LifecycleOperation.h \
+  inet/common/lifecycle/OperationalBase.h \
+  inet/common/lifecycle/OperationalMixin.h \
+  inet/networklayer/common/L3AddressResolver.h \
+  inet/networklayer/ipv4/IIpv4RoutingTable.h \
+  inet/networklayer/ipv4/Ipv4Route.h \
+  inet/configurator/StreamRegistrationRequest.h \
+  inet/configurator/StreamRegistrationResponse.h \
+  inet/configurator/CentralUserConfig.h
 
 /simulations/inet/src/inet/common/precompiled.h:
 
@@ -158,4 +178,48 @@ inet/queueing/contract/IPassivePacketSink.h:
 
 inet/queueing/contract/IActivePacketSource.h:
 
-inet/configurator/Demand.h:
+inet/networklayer/configurator/base/NetworkConfiguratorBase.h:
+
+inet/common/Topology.h:
+
+inet/networklayer/common/NetworkInterface.h:
+
+inet/common/lifecycle/ILifecycle.h:
+
+inet/common/packet/tag/TagSet.h:
+
+inet/networklayer/common/L3Address.h:
+
+inet/networklayer/common/ModuleIdAddress.h:
+
+inet/networklayer/common/ModulePathAddress.h:
+
+inet/networklayer/contract/clns/ClnsAddress.h:
+
+inet/networklayer/contract/IInterfaceTable.h:
+
+inet/networklayer/contract/IRoutingTable.h:
+
+inet/networklayer/contract/IRoute.h:
+
+inet/networklayer/common/InterfaceTable.h:
+
+inet/common/lifecycle/ModuleOperations.h:
+
+inet/common/lifecycle/LifecycleOperation.h:
+
+inet/common/lifecycle/OperationalBase.h:
+
+inet/common/lifecycle/OperationalMixin.h:
+
+inet/networklayer/common/L3AddressResolver.h:
+
+inet/networklayer/ipv4/IIpv4RoutingTable.h:
+
+inet/networklayer/ipv4/Ipv4Route.h:
+
+inet/configurator/StreamRegistrationRequest.h:
+
+inet/configurator/StreamRegistrationResponse.h:
+
+inet/configurator/CentralUserConfig.h:

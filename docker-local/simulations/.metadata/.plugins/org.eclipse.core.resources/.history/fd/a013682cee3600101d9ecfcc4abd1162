@@ -1,0 +1,34 @@
+/*
+ * wTSNGateScheduleConfigurator.cc
+ *
+ *  Created on: May 20, 2025
+ *      Author: root
+ */
+
+
+#include "inet/linklayer/configurator/gatescheduling/common/wTSNGateScheduleConfigurator.h"
+
+namespace inet {
+
+Define_Module(wTSNGateScheduleConfigurator);
+
+wTSNGateScheduleConfigurator::Output *wTSNGateScheduleConfigurator::computeGateScheduling(const Input& input) const{
+    // TODO
+
+    auto output = new Output();
+
+    std::map<Input::Port *, std::vector<Schedule *>> gateSchedules; // maps ports to schedules per traffic class
+    std::map<Input::Application *, simtime_t> applicationStartTimes; // maps applications to start times
+
+    //TODO
+
+    output->gateSchedules = gateSchedules;
+    output->applicationStartTimes = applicationStartTimes;
+    return output;
+}
+
+
+} // namespace inet
+
+
+

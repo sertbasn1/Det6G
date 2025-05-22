@@ -21,4 +21,5 @@ moduleinterface IActivePacketSource
         @display("i=block/source");
     gates:
         output out @labels(push);
+ 
 }

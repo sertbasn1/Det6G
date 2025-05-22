@@ -1,0 +1,36 @@
+/*
+ * wTSNGateScheduleConfigurator.h
+ *
+ *  Created on: May 20, 2025
+ *      Author: root
+ */
+
+#ifndef INET_LINKLAYER_CONFIGURATOR_GATESCHEDULING_COMMON_WTSNGATESCHEDULECONFIGURATOR_H_
+#define INET_LINKLAYER_CONFIGURATOR_GATESCHEDULING_COMMON_WTSNGATESCHEDULECONFIGURATOR_H_
+
+
+#include "inet/linklayer/configurator/gatescheduling/base/GateScheduleConfiguratorBase.h"
+#include "inet/centralconfigurator/StreamRegistrationRequest.h"
+#include "inet/centralconfigurator/StreamRegistrationResponse.h"
+#include <Python.h>
+
+namespace inet {
+
+class INET_API wTSNGateScheduleConfigurator : public GateScheduleConfiguratorBase
+{
+    protected:
+        virtual void initialize(int stage) override;
+
+        virtual Output *computeGateScheduling(const Input& input) const override;
+        Output *  get_optimal_assignments() const;
+        Output *  get_simulated_optimal_assignments() const;
+
+
+    public:
+        std::vector<StreamStatus> triggerGateScheduling(std::vector<StreamRegistrationRequest> requests);
+
+};
+
+}
+
+#endif /* INET_LINKLAYER_CONFIGURATOR_GATESCHEDULING_COMMON_WTSNGATESCHEDULECONFIGURATOR_H_ */
