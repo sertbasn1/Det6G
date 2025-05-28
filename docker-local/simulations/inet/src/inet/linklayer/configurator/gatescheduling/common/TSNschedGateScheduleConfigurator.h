@@ -14,7 +14,7 @@ namespace inet {
 
 class INET_API TSNschedGateScheduleConfigurator : public GateScheduleConfiguratorBase
 {
-  protected:
+  public:
     virtual cValueMap *convertInputToJson(const Input& input) const;
     virtual Output *convertJsonToOutput(const Input& input, const cValueMap *json) const;
 

@@ -1,0 +1,334 @@
+{
+  devices: [
+    {
+      name: "device1"
+    },
+    {
+      name: "device2"
+    },
+    {
+      name: "device3"
+    }
+  ],
+  flows: [
+    {
+      endDevices: [
+        "device2"
+      ],
+      fixedPriority: "true",
+      flowEndTime: 5,
+      flowEndTimeUnit: "s",
+      flowStartTime: 3,
+      flowStartTimeUnit: "s",
+      gamma: 1,
+      hardConstraintTime: 500,
+      hardConstraintTimeUnit: "us",
+      hops: [],
+      name: "stream1",
+      packetPeriodicity: 20000,
+      packetPeriodicityUnit: "us",
+      packetSize: 7568,
+      packetSizeUnit: "bit",
+      priorityValue: 4,
+      sourceDevice: "device1",
+      type: "unicast"
+    },
+    {
+      endDevices: [
+        "device2"
+      ],
+      fixedPriority: "true",
+      flowEndTime: 100,
+      flowEndTimeUnit: "s",
+      flowStartTime: 6,
+      flowStartTimeUnit: "s",
+      gamma: 1,
+      hardConstraintTime: 300,
+      hardConstraintTimeUnit: "us",
+      hops: [],
+      name: "stream2",
+      packetPeriodicity: 100000,
+      packetPeriodicityUnit: "us",
+      packetSize: 7568,
+      packetSizeUnit: "bit",
+      priorityValue: 4,
+      sourceDevice: "device3",
+      type: "unicast"
+    }
+  ],
+  switches: [
+    {
+      name: "bridge1",
+      ports: [
+        {
+          connectsTo: "nwtt",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "bridge1-eth[0]",
+          portSpeed: 100,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0.05,
+          timeToTravelUnit: "us"
+        },
+        {
+          connectsTo: "bridge2",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "bridge1-eth[1]",
+          portSpeed: 100,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0.05,
+          timeToTravelUnit: "us"
+        },
+        {
+          connectsTo: "bridge3",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "bridge1-eth[2]",
+          portSpeed: 100,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0.05,
+          timeToTravelUnit: "us"
+        }
+      ]
+    },
+    {
+      name: "bridge2",
+      ports: [
+        {
+          connectsTo: "nwtt",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "bridge2-eth[0]",
+          portSpeed: 100,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0.05,
+          timeToTravelUnit: "us"
+        },
+        {
+          connectsTo: "bridge1",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "bridge2-eth[1]",
+          portSpeed: 100,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0.05,
+          timeToTravelUnit: "us"
+        },
+        {
+          connectsTo: "bridge3",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "bridge2-eth[2]",
+          portSpeed: 100,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0.05,
+          timeToTravelUnit: "us"
+        }
+      ]
+    },
+    {
+      name: "bridge3",
+      ports: [
+        {
+          connectsTo: "device3",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "bridge3-eth[0]",
+          portSpeed: 100,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0.05,
+          timeToTravelUnit: "us"
+        },
+        {
+          connectsTo: "bridge1",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "bridge3-eth[1]",
+          portSpeed: 100,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0.05,
+          timeToTravelUnit: "us"
+        },
+        {
+          connectsTo: "bridge2",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "bridge3-eth[2]",
+          portSpeed: 100,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0.05,
+          timeToTravelUnit: "us"
+        }
+      ]
+    },
+    {
+      name: "dstt[0]",
+      ports: [
+        {
+          connectsTo: "device1",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "dstt[0]-eth[0]",
+          portSpeed: 100,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0.05,
+          timeToTravelUnit: "us"
+        },
+        {
+          connectsTo: "nwtt",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "dstt[0]-tt[0]",
+          portSpeed: inf,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0,
+          timeToTravelUnit: "us"
+        }
+      ]
+    },
+    {
+      name: "nwtt",
+      ports: [
+        {
+          connectsTo: "bridge1",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "nwtt-eth[0]",
+          portSpeed: 100,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0.05,
+          timeToTravelUnit: "us"
+        },
+        {
+          connectsTo: "dstt[0]",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "nwtt-tt[0]",
+          portSpeed: inf,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0,
+          timeToTravelUnit: "us"
+        }
+      ]
+    },
+    {
+      name: "dstt[0]",
+      ports: [
+        {
+          connectsTo: "device2",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "dstt[0]-eth[0]",
+          portSpeed: 100,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0.05,
+          timeToTravelUnit: "us"
+        },
+        {
+          connectsTo: "nwtt",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "dstt[0]-tt[0]",
+          portSpeed: inf,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0,
+          timeToTravelUnit: "us"
+        }
+      ]
+    },
+    {
+      name: "nwtt",
+      ports: [
+        {
+          connectsTo: "bridge2",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "nwtt-eth[0]",
+          portSpeed: 100,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0.05,
+          timeToTravelUnit: "us"
+        },
+        {
+          connectsTo: "dstt[0]",
+          cycleStart: 0,
+          cycleStartUnit: "us",
+          maximumSlotDuration: 1000,
+          maximumSlotDurationUnit: "us",
+          name: "nwtt-tt[0]",
+          portSpeed: inf,
+          portSpeedSizeUnit: "bit",
+          portSpeedTimeUnit: "us",
+          scheduleType: "Hypercycle",
+          timeToTravel: 0,
+          timeToTravelUnit: "us"
+        }
+      ]
+    }
+  ]
+}

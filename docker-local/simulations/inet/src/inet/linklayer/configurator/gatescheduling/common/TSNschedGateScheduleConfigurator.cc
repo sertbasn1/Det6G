@@ -9,6 +9,7 @@
 
 #include <cstdio>
 #include <fstream>
+using namespace std;
 
 namespace inet {
 
@@ -119,6 +120,13 @@ cValueMap *TSNschedGateScheduleConfigurator::convertInputToJson(const Input& inp
         jsonFlow->set("packetSizeUnit", "bit");
         jsonFlow->set("hardConstraintTime", flow->startApplication->maxLatency.dbl() * 1000000);
         jsonFlow->set("hardConstraintTimeUnit", "us");
+        jsonFlow->set("gamma", flow->gamma);
+        jsonFlow->set("flowStartTime", flow->flowStartTime.dbl());
+        jsonFlow->set("flowStartTimeUnit", "s");
+        jsonFlow->set("flowEndTime", flow->flowEndTime.dbl());
+        jsonFlow->set("flowEndTimeUnit", "s");
+
+
         cValueArray *endDevices = new cValueArray();
         jsonFlow->set("endDevices", endDevices);
         endDevices->add(cValue(flow->endDevice->module->getFullName()));
@@ -220,6 +228,8 @@ void TSNschedGateScheduleConfigurator::writeInputToFile(const Input& input, std:
     if (stream.fail())
         throw cRuntimeError("Cannot open file %s", fileName.c_str());
     printJson(stream, cValue(json));
+
+    std::cout<<"writing to fileee"<<endl;
     delete json;
 }
 

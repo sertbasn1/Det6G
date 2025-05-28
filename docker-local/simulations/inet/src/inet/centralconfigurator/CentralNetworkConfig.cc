@@ -53,7 +53,7 @@ void CentralNetworkConfig::printTopology(){
 void CentralNetworkConfig::printIndexMapping() {
     cout<<"TopoIndex\tModuleId"<<endl;
     for (const auto& pair : topoIndices) {
-            cout << pair.first << "\t" << pair.second << "\t"<< this->getSimulation()->getModule(pair.second)->getFullName() << endl;
+            cout << pair.first << "\t" << pair.second << "\t"<< this->getSimulation()->getModule(pair.second)->getFullPath() << endl;
         }
 
 }
@@ -87,6 +87,9 @@ int CentralNetworkConfig::registerStreams(std::vector<StreamRegistrationRequest>
    // OPT Call
     wTSNGateScheduleConfigurator * gateConfModule = check_and_cast<wTSNGateScheduleConfigurator *>((this->getParentModule())->getSubmodule("gateScheduleConfigurator"));
     std::vector<StreamStatus> talkerUpdates = gateConfModule->triggerGateScheduling(requests);
+
+    cout<<"TON"<<endl;
+
 
     if(talkerUpdates.size()){
         CentralUserConfig *cuc = check_and_cast<CentralUserConfig *>((this->cSimpleModule::getParentModule())->getSubmodule("cuc"));

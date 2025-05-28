@@ -61,9 +61,30 @@
   inet/centralconfigurator/../centralconfigurator/StreamRegistrationResponse.h \
   inet/linklayer/configurator/gatescheduling/common/wTSNGateScheduleConfigurator.h \
   inet/linklayer/configurator/gatescheduling/base/GateScheduleConfiguratorBase.h \
+  inet/linklayer/configurator/gatescheduling/common/TSNschedGateScheduleConfigurator.h \
   inet/centralconfigurator/StreamRegistrationRequest.h \
   inet/centralconfigurator/StreamRegistrationResponse.h \
-  /usr/include/python3.11/Python.h /usr/include/python3.11/patchlevel.h \
+  inet/common/PatternMatcher.h inet/queueing/gate/PeriodicGate.h \
+  inet/queueing/base/PacketGateBase.h \
+  inet/common/IProtocolRegistrationListener.h \
+  inet/common/ProtocolGroup.h inet/common/ProtocolTag_m.h \
+  inet/common/Protocol_m.h inet/common/TagBase_m.h \
+  inet/common/packet/chunk/Chunk_m.h inet/common/Units_m.h \
+  inet/common/packet/chunk/BitCountChunk.h \
+  inet/common/packet/chunk/ByteCountChunk.h \
+  inet/common/packet/chunk/cPacketChunk.h \
+  inet/common/packet/chunk/StreamBufferChunk.h \
+  inet/common/packet/chunk/EncryptedChunk.h \
+  inet/common/packet/chunk/FieldsChunk.h \
+  inet/queueing/base/PacketFlowBase.h inet/common/ModuleRef.h \
+  inet/queueing/contract/IPacketCollection.h \
+  inet/queueing/contract/IPacketFlow.h \
+  inet/queueing/contract/IPacketSink.h \
+  inet/queueing/contract/IActivePacketSink.h \
+  inet/queueing/contract/IPassivePacketSource.h \
+  inet/queueing/contract/IPacketSource.h \
+  inet/queueing/contract/IPacketGate.h /usr/include/python3.11/Python.h \
+  /usr/include/python3.11/patchlevel.h \
   /usr/include/python3.11/pyconfig.h \
   /usr/include/python3.11/pymacconfig.h /usr/include/python3.11/pyport.h \
   /usr/include/python3.11/exports.h /usr/include/python3.11/pymacro.h \
@@ -162,13 +183,6 @@
   /usr/include/python3.11/cpython/pyfpe.h \
   /usr/include/python3.11/tracemalloc.h \
   inet/applications/base/ApplicationPacket_m.h \
-  inet/common/packet/chunk/Chunk_m.h inet/common/Units_m.h \
-  inet/common/packet/chunk/BitCountChunk.h \
-  inet/common/packet/chunk/ByteCountChunk.h \
-  inet/common/packet/chunk/cPacketChunk.h \
-  inet/common/packet/chunk/StreamBufferChunk.h \
-  inet/common/packet/chunk/EncryptedChunk.h \
-  inet/common/packet/chunk/FieldsChunk.h \
   inet/applications/udpapp/SimpleUdpSinkApp.h \
   inet/applications/base/ApplicationBase.h \
   inet/transportlayer/contract/udp/UdpSocket.h \
@@ -345,9 +359,61 @@ inet/linklayer/configurator/gatescheduling/common/wTSNGateScheduleConfigurator.h
 
 inet/linklayer/configurator/gatescheduling/base/GateScheduleConfiguratorBase.h:
 
+inet/linklayer/configurator/gatescheduling/common/TSNschedGateScheduleConfigurator.h:
+
 inet/centralconfigurator/StreamRegistrationRequest.h:
 
 inet/centralconfigurator/StreamRegistrationResponse.h:
+
+inet/common/PatternMatcher.h:
+
+inet/queueing/gate/PeriodicGate.h:
+
+inet/queueing/base/PacketGateBase.h:
+
+inet/common/IProtocolRegistrationListener.h:
+
+inet/common/ProtocolGroup.h:
+
+inet/common/ProtocolTag_m.h:
+
+inet/common/Protocol_m.h:
+
+inet/common/TagBase_m.h:
+
+inet/common/packet/chunk/Chunk_m.h:
+
+inet/common/Units_m.h:
+
+inet/common/packet/chunk/BitCountChunk.h:
+
+inet/common/packet/chunk/ByteCountChunk.h:
+
+inet/common/packet/chunk/cPacketChunk.h:
+
+inet/common/packet/chunk/StreamBufferChunk.h:
+
+inet/common/packet/chunk/EncryptedChunk.h:
+
+inet/common/packet/chunk/FieldsChunk.h:
+
+inet/queueing/base/PacketFlowBase.h:
+
+inet/common/ModuleRef.h:
+
+inet/queueing/contract/IPacketCollection.h:
+
+inet/queueing/contract/IPacketFlow.h:
+
+inet/queueing/contract/IPacketSink.h:
+
+inet/queueing/contract/IActivePacketSink.h:
+
+inet/queueing/contract/IPassivePacketSource.h:
+
+inet/queueing/contract/IPacketSource.h:
+
+inet/queueing/contract/IPacketGate.h:
 
 /usr/include/python3.11/Python.h:
 
@@ -564,22 +630,6 @@ inet/centralconfigurator/StreamRegistrationResponse.h:
 /usr/include/python3.11/tracemalloc.h:
 
 inet/applications/base/ApplicationPacket_m.h:
-
-inet/common/packet/chunk/Chunk_m.h:
-
-inet/common/Units_m.h:
-
-inet/common/packet/chunk/BitCountChunk.h:
-
-inet/common/packet/chunk/ByteCountChunk.h:
-
-inet/common/packet/chunk/cPacketChunk.h:
-
-inet/common/packet/chunk/StreamBufferChunk.h:
-
-inet/common/packet/chunk/EncryptedChunk.h:
-
-inet/common/packet/chunk/FieldsChunk.h:
 
 inet/applications/udpapp/SimpleUdpSinkApp.h:
 

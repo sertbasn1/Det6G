@@ -94,6 +94,10 @@ class INET_API GateScheduleConfiguratorBase : public NetworkConfiguratorBase
             b cutthroughSwitchingHeaderSize = b(0);
             Application *startApplication = nullptr; // the application that generates the packets
             Device *endDevice = nullptr; // the device where the flow ends
+            double gamma = 0;
+            simtime_t flowStartTime = -1;
+            simtime_t flowEndTime = -1;
+
             std::vector<PathFragment *> pathFragments; // list of path fragments (may use redundancy)
 
             ~Flow() {
